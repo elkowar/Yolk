@@ -1,0 +1,30 @@
+[workspace]
+members = ["cargo:."]
+
+# Config for 'dist'
+[dist]
+# github-build-setup = "../dist-build-setup.yml"
+# The preferred dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.26.0-prerelease.3"
+# CI backends to support
+ci = "github"
+# The installers to generate for each app
+installers = ["shell"]
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = ["x86_64-unknown-linux-musl", "x86_64-pc-windows-msvc"]
+# Which actions to run on pull requests
+pr-run-mode = "upload"
+# Path that installers should place binaries in
+install-path = "CARGO_HOME"
+# Whether to install an updater program
+install-updater = false
+
+github-custom-runners.x86_64-unknown-linux-gnu.container = "ekidd/rust-musl-builder"
+github-custom-runners.x86_64-unknown-linux-musl.container = "ekidd/rust-musl-builder"
+github-custom-runners.x86_64-pc-windows-msvc.container = "messense/cargo-xwin"
+github-custom-runners.aarch64-pc-windows-msvc.container = "messense/cargo-xwin"
+# [dist.github-custom-runners.x86_64-unknown-linux-musl]
+# container = "ekidd/rust-musl-builder"
+
+[dist.dependencies.apt]
+"musl-tools" = "*"

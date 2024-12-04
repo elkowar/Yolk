@@ -1,0 +1,2 @@
+- name: Symlink musl-g++
+  run: sudo ln -s "/usr/bin/g++" "/usr/bin/musl-g++"
