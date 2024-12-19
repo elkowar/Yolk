@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.14](https://github.com/elkowar/yolk/compare/v0.0.13...v0.0.14) - 2024-12-19
+
+### Added
+
+- Add support for importing files in yolk.rhai
+- support multiline tags
+- Add a few more comment symbols
+
+### Fixed
+
+- Prevent yolk from comitting inconsistent state when syncing fails
+
 ## [0.0.13](https://github.com/elkowar/yolk/compare/v0.0.12...v0.0.13) - 2024-12-18
 
 ### Added
