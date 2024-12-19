@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html lang="en" class="dark" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Template functions - Yolk</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "theme" : "dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('dark')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting_started.html"><strong aria-hidden="true">1.</strong> Getting started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../git_concepts.html"><strong aria-hidden="true">1.1.</strong> Git concepts</a></li></ol></li><li class="chapter-item expanded "><a href="../eggs.html"><strong aria-hidden="true">2.</strong> Eggs</a></li><li class="chapter-item expanded "><a href="../templates.html"><strong aria-hidden="true">3.</strong> Templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../yolk_rhai.html"><strong aria-hidden="true">3.1.</strong> The yolk.rhai file</a></li><li class="chapter-item expanded "><a href="../conditional_templates.html"><strong aria-hidden="true">3.2.</strong> Conditionals</a></li><li class="chapter-item expanded "><a href="../custom_template_functions.html"><strong aria-hidden="true">3.3.</strong> Custom Template Functions</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Rhai reference</li><li class="chapter-item expanded "><a href="../rhai_docs/index.html"><strong aria-hidden="true">4.</strong> Function Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rhai_docs/template.html" class="active"><strong aria-hidden="true">4.1.</strong> Template functions</a></li><li class="chapter-item expanded "><a href="../rhai_docs/utils.html"><strong aria-hidden="true">4.2.</strong> Utils</a></li><li class="chapter-item expanded "><a href="../rhai_docs/io.html"><strong aria-hidden="true">4.3.</strong> IO Functions</a></li><li class="chapter-item expanded "><a href="../rhai_docs/global.html"><strong aria-hidden="true">4.4.</strong> Rhai stdlib</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Yolk</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/elkowar/yolk" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/elkowar/yolk/edit/main/docs/src/rhai_docs/template.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class='rhai-doc'>
+<h1 id="template-tag-functions"><a class="header" href="#template-tag-functions">Template tag functions</a></h1>
+<p>Yolk template tags simply execute rhai functions that transform the block of text the tag operates on.</p>
+<p>Quick reminder: Yolk has three different types of tags, that differ only in what text they operate on:</p>
+<ul>
+<li>Next-line tags (<code>{# ... #}</code>): These tags operate on the line following the tag.</li>
+<li>Inline tags (<code>{&lt; ... &gt;}</code>): These tags operate on everything before the tag within the same line.</li>
+<li>Block tags (<code>{% ... %} ... {% end %}</code>): These tags operate on everything between the tag and the corresponding <code>{% end %}</code> tag.</li>
+</ul>
+<p>Inside these tags, you can call any of Yolks template tag functions (Or, in fact, any rhai expression that returns a string).</p>
+<hr />
+<p><strong>namespace</strong>: <code>template</code></p>
+<hr />
+<div class='doc-block'>
+<h2 id="replace_between"><a class="header" href="#replace_between">replace_between</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_between(left: &amp;str, right: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rbet</code>.</p>
+<p>Replaces the text between two delimiters with the <code>replacement</code>.</p>
+<h4 id="example"><a class="header" href="#example">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = (Arial) # {&lt; replace_between(`(`, `)`, data.font.ui) &gt;}
+</code></pre>
+<p>Note: we don't need to include the quotes in the replacement here.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_color"><a class="header" href="#replace_color">replace_color</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_color(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rcol</code>.</p>
+<p>Replaces a hex color value with a new hex color.</p>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<pre><code class="language-handlebars">background_color = &quot;#282828&quot; # {&lt; replace_color(data.colors.bg) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_in"><a class="header" href="#replace_in">replace_in</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_in(between: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rin</code>.</p>
+<p>Replaces the text between two delimiters with the <code>replacement</code>.</p>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
+<pre><code class="language-toml">ui_font = &quot;Arial&quot; # {&lt; replace_in(`&quot;`, data.font.ui) &gt;}
+</code></pre>
+<p>Note: we don't need to include the quotes in the replacement here.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_number"><a class="header" href="#replace_number">replace_number</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_number(replacement: Dynamic) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rnum</code>.</p>
+<p>Replaces a number with another number.</p>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<pre><code class="language-handlebars">cursor_size = 32 # {&lt; replace_number(data.cursor_size) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_quoted"><a class="header" href="#replace_quoted">replace_quoted</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_quoted(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rq</code>.</p>
+<p>Replaces a value between quotes with another value</p>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = &quot;Arial&quot; # {&lt; replace_quoted(data.font.ui) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_re"><a class="header" href="#replace_re">replace_re</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_re(regex: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rr</code>.</p>
+<p>Replaces all occurrences of a Regex <code>pattern</code> with <code>replacement</code> in the text.</p>
+<h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = &quot;Arial&quot; # {&lt; replace_re(`&quot;.*&quot;`, `&quot;{data.font.ui}&quot;`) &gt;}
+</code></pre>
+<p>Note that the replacement value needs to contain the quotes, as those are also matched against in the regex pattern.
+Otherwise, we would end up with invalid toml.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_value"><a class="header" href="#replace_value">replace_value</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_value(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rv</code>.</p>
+<p>Replaces a value (without spaces) after a <code>:</code> or a <code>=</code> with another value</p>
+<h4 id="example-6"><a class="header" href="#example-6">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = Arial # {&lt; replace_value(data.font.ui) &gt;}
+</code></pre>
+</div>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../rhai_docs/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../rhai_docs/utils.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../rhai_docs/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../rhai_docs/utils.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././theme/tabs.js"></script>
+
+
+    </div>
+    </body>
+</html>

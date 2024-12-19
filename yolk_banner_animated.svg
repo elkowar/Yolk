@@ -1,0 +1,474 @@
+<svg id="eozahuGljty1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 499 203" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" project-id="652de6d5d3264ca198a982479aeb65e3" export-id="9b573bcadaca46aba8720b5d4056f281" cached="false">
+  <style>
+    <![CDATA[
+    #eozahuGljty7_tr {
+      animation: eozahuGljty7_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty7_tr__tr {
+      0% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      3.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      6.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      10% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      13.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      16.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      20% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      23.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      26.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      63.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      66.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      70% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      73.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      76.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      80% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      83.333333% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      86.666667% {
+        transform: translate(199.996002px, 134px) rotate(-0.048103deg)
+      }
+
+      90% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+
+      100% {
+        transform: translate(199.996002px, 134px) rotate(-0.947993deg)
+      }
+    }
+
+    #eozahuGljty13_tr {
+      animation: eozahuGljty13_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty13_tr__tr {
+      0% {
+        transform: translate(198.789381px, 109.880462px) rotate(0deg);
+        animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)
+      }
+
+      25% {
+        transform: translate(198.789381px, 109.880462px) rotate(6.355757deg);
+        animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)
+      }
+
+      50% {
+        transform: translate(198.789381px, 109.880462px) rotate(0deg);
+        animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)
+      }
+
+      75% {
+        transform: translate(198.789381px, 109.880462px) rotate(6.355757deg);
+        animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)
+      }
+
+      100% {
+        transform: translate(198.789381px, 109.880462px) rotate(0deg)
+      }
+    }
+
+    #eozahuGljty20_ts {
+      animation: eozahuGljty20_ts__ts 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty20_ts__ts {
+      0% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      61.666667% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      63.333333% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 0.107423)
+      }
+
+      66.666667% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      100% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+    }
+
+    #eozahuGljty21_ts {
+      animation: eozahuGljty21_ts__ts 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty21_ts__ts {
+      0% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      61.666667% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      63.333333% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 0.107423)
+      }
+
+      66.666667% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      100% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+    }
+
+    #eozahuGljty26_ts {
+      animation: eozahuGljty26_ts__ts 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty26_ts__ts {
+      0% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      61.666667% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      63.333333% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 0.107423)
+      }
+
+      66.666667% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      100% {
+        transform: translate(223.096958px, 64.04777px) rotate(6.668635deg) scale(1, 1)
+      }
+    }
+
+    #eozahuGljty27_ts {
+      animation: eozahuGljty27_ts__ts 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty27_ts__ts {
+      0% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      61.666667% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      63.333333% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 0.107423)
+      }
+
+      66.666667% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+
+      100% {
+        transform: translate(185.353966px, 59.635142px) rotate(6.668635deg) scale(1, 1)
+      }
+    }
+
+    #eozahuGljty30_tr {
+      animation: eozahuGljty30_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty30_tr__tr {
+      0% {
+        transform: translate(160.877499px, 100.5px) rotate(0deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      11.666667% {
+        transform: translate(160.877499px, 100.5px) rotate(17.17543deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      25% {
+        transform: translate(160.877499px, 100.5px) rotate(0deg)
+      }
+
+      36.666667% {
+        transform: translate(160.877499px, 100.5px) rotate(17.17543deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      50% {
+        transform: translate(160.877499px, 100.5px) rotate(0deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      61.666667% {
+        transform: translate(160.877499px, 100.5px) rotate(17.17543deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      75% {
+        transform: translate(160.877499px, 100.5px) rotate(0deg)
+      }
+
+      86.666667% {
+        transform: translate(160.877499px, 100.5px) rotate(17.17543deg);
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1)
+      }
+
+      100% {
+        transform: translate(160.877499px, 100.5px) rotate(0deg)
+      }
+    }
+
+    #eozahuGljty31_tr {
+      animation: eozahuGljty31_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty31_tr__tr {
+      0% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      3.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      6.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      10% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      13.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      16.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      20% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      23.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      26.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      63.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      66.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      70% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      73.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      76.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      80% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      83.333333% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      86.666667% {
+        transform: translate(199.996002px, 135px) rotate(-0.048103deg)
+      }
+
+      90% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+
+      100% {
+        transform: translate(199.996002px, 135px) rotate(-0.947993deg)
+      }
+    }
+
+    #eozahuGljty42_tr {
+      animation: eozahuGljty42_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty42_tr__tr {
+      0% {
+        transform: translate(135.33781px, 207.03926px) rotate(720deg);
+        animation-timing-function: cubic-bezier(0.415, 0.08, 0.115, 0.955)
+      }
+
+      100% {
+        transform: translate(135.33781px, 207.03926px) rotate(158.961039deg)
+      }
+    }
+
+    #eozahuGljty42 {
+      animation: eozahuGljty42_f_p 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty42_f_p {
+      0% {
+        fill: #d2dbed
+      }
+
+      100% {
+        fill: #d2dbec
+      }
+    }
+
+    #eozahuGljty43_tr {
+      animation: eozahuGljty43_tr__tr 6000ms linear infinite normal forwards
+    }
+
+    @keyframes eozahuGljty43_tr__tr {
+      0% {
+        transform: translate(11.12px, 29.9px) rotate(-720deg);
+        animation-timing-function: cubic-bezier(0.415, 0.08, 0.115, 0.955)
+      }
+
+      100% {
+        transform: translate(11.12px, 29.9px) rotate(-158.961039deg)
+      }
+    }
+    ]]>
+  </style>
+  <defs>
+    <filter id="eozahuGljty2-filter" x="-150%" width="400%" y="-150%" height="400%">
+      <feGaussianBlur id="eozahuGljty2-filter-drop-shadow-0-blur" in="SourceAlpha" stdDeviation="2.65,2.65" />
+      <feOffset id="eozahuGljty2-filter-drop-shadow-0-offset" dx="0" dy="1" result="tmp" />
+      <feFlood id="eozahuGljty2-filter-drop-shadow-0-flood" flood-color="#000" />
+      <feComposite id="eozahuGljty2-filter-drop-shadow-0-composite" operator="in" in2="tmp" />
+      <feMerge id="eozahuGljty2-filter-drop-shadow-0-merge" result="result">
+        <feMergeNode id="eozahuGljty2-filter-drop-shadow-0-merge-node-1" />
+        <feMergeNode id="eozahuGljty2-filter-drop-shadow-0-merge-node-2" in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="eozahuGljty36-fill" x1="0.5" y1="0" x2="0.5" y2="1" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
+      <stop id="eozahuGljty36-fill-0" offset="0%" stop-color="rgba(255,255,255,0)" />
+      <stop id="eozahuGljty36-fill-1" offset="100%" stop-color="#010022" />
+    </linearGradient>
+  </defs>
+  <g filter="url(#eozahuGljty2-filter)">
+    <rect width="485" height="189" rx="21" ry="21" transform="translate(7 6)" fill="#212121" />
+  </g>
+  <path d="M444,173.8c-10,0-15-4.667-15-14v-31c0-6.4-1.333-11.2-4-14.4-2.533-3.333-6.933-5-13.2-5-6.8,0-11.867,1.4-15.2,4.2-3.2,2.8-4.8,7.667-4.8,14.6v30c0,10.4-4.8,15.6-14.4,15.6s-14.4-5.2-14.4-15.6v-112.6c0-10.4,4.8-15.6,14.4-15.6s14.4,5.2,14.4,15.6v47c1.867-1.8667,3.8-3.3333,5.8-4.4s5.333-2.2667,10-3.6c6.667-1.8667,11.267-5.8,13.8-11.8s3.8-15.6,3.8-28.8c0-4.9333,1.067-8.4667,3.2-10.6c2.133-2.2667,5.533-3.4,10.2-3.4c9.867,0,14.8,5,14.8,15c0,13.3333-1.4,24.2-4.2,32.6-2.8,8.2667-7.133,14.6667-13,19.2c14.267,6.133,21.4,16.933,21.4,32.4v30.6c0,9.333-4.533,14-13.6,14Z" fill="#f7d654" />
+  <path d="M282.147,172c-9.6,0-14.4-5.2-14.4-15.6v-111.0002c0-10.4,4.8-15.6,14.4-15.6s14.4,5.2,14.4,15.6v88.8002c0,2.133-.2,4.866-.6,8.2-.267,3.2-.6,5.866-1,8c3.467-4.134,7.733-6.2,12.8-6.2h29.4c4.933,0,8.733,1.2,11.4,3.6s4,5.866,4,10.4c0,9.2-5.133,13.8-15.4,13.8h-55Z" fill="#f7d654" />
+  <path d="M93.3455,173.6c-9.8667,0-14.8-4.467-14.8-13.4v-39.8l-41.6-68.2002c-2.4-4.1333-3.3334-7.8667-2.8-11.2.6666-3.3333,2.2-6,4.6-8c2.5333-2.1333,5.4-3.2,8.6-3.2c4.4,0,7.8666,1.3333,10.4,4c2.6666,2.6667,5.6666,7.2,9,13.6l27.2,49c5.3333-4.9333,9.5335-9.0667,12.5995-12.4c3.067-3.4667,5.267-6.7333,6.6-9.8c1.334-3.0667,2-6.4667,2-10.2s-.4-7.8667-1.2-12.4-1.2-7.8667-1.2-10c0-3.3333,1.4-6.1333,4.2-8.4s6.2-3.4,10.2-3.4c4.8,0,8.467,2.4,11,7.2c2.667,4.6667,4,11.5333,4,20.6c0,7.4667-1,14.4667-3,21-1.866,6.5333-5.333,13.1333-10.4,19.8-4.933,6.6662-12.066,13.9332-21.4,21.8002v40c0,4.533-1.133,7.933-3.4,10.2-2.133,2.133-5.6662,3.2-10.5995,3.2Z" fill="#f7d654" />
+  <g id="eozahuGljty7_tr" transform="translate(199.996002,134) rotate(-0.947993)">
+    <g transform="translate(-199.996002,-134)" mask="url(#eozahuGljty10)">
+      <g>
+        <path d="M152.746,79l-7,4-16.5,96.5l141.5,13-8.5-113-8.5-2h-4l-6,3-6.5-4-5,6.5-6-.5-6,13.5-1.5-7.5-11,9h-9l-15-6-4.5-3.5-9-6.5-4.5-6-7.5,5.5-5.5-2Z" fill="#a7a092" />
+      </g>
+      <mask id="eozahuGljty10" mask-type="alpha" x="-150%" y="-150%" height="400%" width="400%">
+        <path d="M257.746,118.124c0,30.859-25.765,55.876-57.547,55.876-31.783,0-58.453-25.017-58.453-55.876c0-48.6078,26.67-98.124,58.453-98.124c31.782,0,57.547,49.5162,57.547,98.124Z" fill="#aea895" />
+      </mask>
+    </g>
+  </g>
+  <ellipse rx="53.5" ry="42.5" transform="matrix(.993234 0.116127-.116127 0.993234 196.818943 120.881071)" fill="#e3c656" />
+  <g id="eozahuGljty13_tr" transform="translate(198.789381,109.880462) rotate(0)">
+    <g transform="translate(-198.78938,-109.543554)">
+      <circle r="42.5" transform="matrix(.993234 0.116127-.116127 0.993234 203.089959 67.246078)" fill="#f7d755" />
+      <g transform="matrix(.999999-.00139 0.00139 0.999999-.036316 0.249836)" mask="url(#eozahuGljty18)">
+        <g>
+          <path d="M247.377,55.2983l-6.988-2.0917-5.922,1.356-3.121-6.7771-6.884,2.7704-3.051-3.5358-6.413,1.577-7.585-6.8125-4.931,1.318-3.522-2.3864-5.445.5307-2.507-2.1764-7.45-.4941-3.044-2.3586-5.997-2.1292c7.319-5.5845,24.361-13.011,44.006-6.0584s28.854,27.2681,28.854,27.2681Z" fill-opacity="0.05" />
+        </g>
+        <mask id="eozahuGljty18" mask-type="alpha" x="-150%" y="-150%" height="400%" width="400%">
+          <circle r="42.5" transform="matrix(.993234 0.116127-.116127 0.993234 203.089959 67.246078)" fill="#f7d755" />
+        </mask>
+      </g>
+      <g id="eozahuGljty20_ts" transform="translate(185.353966,59.635142) rotate(6.668635) scale(1,1)">
+        <circle r="9" transform="translate(0,0)" fill="#171414" />
+      </g>
+      <g id="eozahuGljty21_ts" transform="translate(223.096958,64.04777) rotate(6.668635) scale(1,1)">
+        <circle r="9" transform="translate(0,0)" fill="#171414" />
+      </g>
+      <g mask="url(#eozahuGljty25)">
+        <circle r="4" transform="matrix(.993234 0.116127-.116127 0.993234 183.59997 57.416068)" fill="#fff" />
+        <circle r="4" transform="matrix(.993234 0.116127-.116127 0.993234 221.341963 61.829078)" fill="#fff" />
+        <mask id="eozahuGljty25">
+          <g id="eozahuGljty26_ts" transform="translate(223.096958,64.04777) rotate(6.668635) scale(1,1)">
+            <circle r="9" transform="translate(0,0)" fill="#fff" stroke-width="0" />
+          </g>
+          <g id="eozahuGljty27_ts" transform="translate(185.353966,59.635142) rotate(6.668635) scale(1,1)">
+            <circle r="9" transform="translate(0,0)" fill="#fff" stroke-width="0" />
+          </g>
+        </mask>
+      </g>
+      <path d="M209.837,78.421c-5.428-4.346-8.818-4.8788-15.395-1.7999.064,7.0373,1.83,10.1018,6.32,14.8343c5.809-4.5437,7.906-7.3144,9.075-13.0344Z" fill="#fd8041" />
+      <path d="M245.43,51.2708l-6.672-1.9797-5.699,1.4347-2.896-6.6971-6.642,2.8558-2.875-3.4734-6.174,1.6617-7.176-6.6677-4.748,1.3826-3.343-2.3231-5.23.6067-2.373-2.1289-7.138-.3837-2.885-2.3024-5.721-2.0315c7.1-5.6618,23.553-13.2971,42.293-6.6645c18.741,6.6325,27.279,26.7105,27.279,26.7105Z" transform="matrix(.999999-.00139 0.00139 0.999999-.034335 0.245781)" fill="#d9d3ca" />
+    </g>
+  </g>
+  <g id="eozahuGljty30_tr" transform="translate(160.877499,100.5) rotate(0)">
+    <path d="M149.746,74.9998c-2.4,1.6,0,12,1.5,17c4.166.5,12.4.7,12-2.5-.5-4-10.5-16.5-13.5-14.5Z" transform="translate(-160.877491,-100.499999)" fill="#f7d654" />
+  </g>
+  <g id="eozahuGljty31_tr" transform="translate(199.996002,135) rotate(-0.947993)">
+    <g transform="translate(-199.996002,-135)" mask="url(#eozahuGljty34)">
+      <g>
+        <path d="M149.746,87l-8-9.5-12.5,102l141.5,13-8.5-113-8.5-2h-4l-2.5,9.5-5-1.5h-8l-6,6-8,4.5-1.5-7.5-11,9h-9l-15-6-6,4.5-5.5-10.5-5,3-10-3-7.5,1.5Z" fill="#d9d3ca" />
+      </g>
+      <mask id="eozahuGljty34" mask-type="alpha" x="-150%" y="-150%" height="400%" width="400%">
+        <path d="M257.746,118.124c0,30.859-25.765,55.876-57.547,55.876-31.783,0-58.453-25.017-58.453-55.876c0-48.6078,26.67-98.124,58.453-98.124c31.782,0,57.547,49.5162,57.547,98.124Z" fill="#aea895" />
+      </mask>
+    </g>
+  </g>
+</svg>
