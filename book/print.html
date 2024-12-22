@@ -1,0 +1,3193 @@
+<!DOCTYPE HTML>
+<html lang="en" class="dark" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Yolk</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "theme" : "dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('dark')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="git_concepts.html"><strong aria-hidden="true">1.1.</strong> Git concepts</a></li></ol></li><li class="chapter-item expanded "><a href="eggs.html"><strong aria-hidden="true">2.</strong> Eggs</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">3.</strong> Templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="yolk_rhai.html"><strong aria-hidden="true">3.1.</strong> The yolk.rhai file</a></li><li class="chapter-item expanded "><a href="conditional_templates.html"><strong aria-hidden="true">3.2.</strong> Conditionals</a></li><li class="chapter-item expanded "><a href="custom_template_functions.html"><strong aria-hidden="true">3.3.</strong> Custom Template Functions</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Rhai reference</li><li class="chapter-item expanded "><a href="rhai_docs/index.html"><strong aria-hidden="true">4.</strong> Function Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rhai_docs/template.html"><strong aria-hidden="true">4.1.</strong> Template functions</a></li><li class="chapter-item expanded "><a href="rhai_docs/utils.html"><strong aria-hidden="true">4.2.</strong> Utils</a></li><li class="chapter-item expanded "><a href="rhai_docs/io.html"><strong aria-hidden="true">4.3.</strong> IO Functions</a></li><li class="chapter-item expanded "><a href="rhai_docs/global.html"><strong aria-hidden="true">4.4.</strong> Rhai stdlib</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Yolk</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/elkowar/yolk" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
+<div class="warning">
+<p><strong>Remember: Yolk is currently in very early development. Expect some breakages and issues.
+Always have a good backup of your files before using Yolk in this stage. You have been warned.</strong></p>
+</div>
+<h2 id="how-dotfiles-are-stored"><a class="header" href="#how-dotfiles-are-stored">How dotfiles are stored</a></h2>
+<p>Yolk manages your dotfiles by storing them in a separate directory, typically inside <code>~/.config/yolk</code>.
+This allows you to keep your dotfiles in version control easily, and lets you manage your configuration from one central location.</p>
+<p>Yolk groups dotfiles into so-called <a href="eggs.html">&quot;eggs&quot;</a>, which are packages of configuration,
+typically for one single application (although you can group them however you want, or even just have one egg for all your configuration files).</p>
+<p>When an egg is &quot;deployed&quot;, Yolk creates symlinks in the target location pointing towards the egg directory.
+This way, the configured appliactions will see the configuration files as they expect to see them.</p>
+<p>To define where a set of configuration files should be deployed to, you declare each of your eggs in your <a href="./yolk_rhai.html">main yolk configuration file</a>.
+This allows you, among other things, to define a different target directory per system.</p>
+<h2 id="initial-setup"><a class="header" href="#initial-setup">Initial setup</a></h2>
+<p>To get started with Yolk, you'll first need to set up the Yolk file structure.</p>
+<pre><code class="language-bash">$ yolk init
+</code></pre>
+<p>This will create the yolk directory, with a default <code>yolk.rhai</code> file, and an <code>eggs</code> directory.</p>
+<h3 id="adding-your-first-egg"><a class="header" href="#adding-your-first-egg">Adding your first egg</a></h3>
+<p>let's say we want to manage the configuration for the <code>alacritty</code> terminal emulator.
+To do this, we first move our alacritty configuration into the <code>eggs</code> directory:</p>
+<pre><code class="language-bash">$ mv ~/.config/alacritty ~/.config/yolk/eggs/
+</code></pre>
+<p>And then configure the corresponding <a href="./yolk_rhai.html#basic-structure">egg deployment</a>:</p>
+<pre><code class="language-rust ignore">export let eggs = #{
+    alacritty: #{
+        targets: &quot;~/.config/alacritty&quot;,
+        templates: [&quot;alacritty.yml&quot;],
+        enabled: true,
+    }
+}</code></pre>
+<p>Now we can run <code>yolk sync</code>!
+This will set up a symlink from the target location <code>~/.config/alacritty</code>
+back to the alacritty egg directory <code>~/.config/yolk/eggs/alacritty</code>.</p>
+<h3 id="committing-your-dots-to-git"><a class="header" href="#committing-your-dots-to-git">Committing your dots to git</a></h3>
+<p>Now, we want to make sure our dotfiles are in version control and pushed to our git host of choice.
+Every interaction with git should be done through the <code>yolk git</code> command.
+This ensures that git sees the canonical (stable) representation of your files, and automatically performs them from within the yolk directory.</p>
+<pre><code class="language-bash">$ yolk git init
+$ yolk safeguard
+$ yolk git add --all
+$ yolk git commit -m &quot;Setup alacritty&quot;
+</code></pre>
+<p>To understand what <code>yolk safeguard</code> does, see <a href="./git_concepts.html#safeguarding-git">safeguarding git</a>.</p>
+<p>You can now set up your git reomte and use git as usual -- just remember to always use <code>yolk git</code>, especially when you're committing your files.</p>
+<h3 id="babys-first-template"><a class="header" href="#babys-first-template">Baby's first template</a></h3>
+<p>Because you too are very indecisive about your terminal colors,
+you now decide you want to use yolk to manage your color theme for alacritty, and any other applications that you might add later.
+You also decide that you want to use a different color scheme on your desktop and your laptop.</p>
+<p>To achieve this, let's first add a declaration of your color theme in your <code>~/.config/yolk/yolk.rhai</code> file:</p>
+<pre><code class="language-rust ignore">// ... snip ...
+
+const themes = #{
+    gruvbox: #{
+        background: &quot;#282828&quot;,
+        foreground: &quot;#ebdbb2&quot;,
+    },
+    mono: #{
+        background: &quot;#000000&quot;,
+        foreground: &quot;#ffffff&quot;,
+    },
+}
+
+export const data = #{
+    colors = if SYSTEM.hostname == &quot;laptop&quot; { themes.gruvbox } else { themes.mono }
+}</code></pre>
+<p>Beautiful!
+What we're doing here is setting up an <em>exported</em> table called <code>data</code>, which will store any user-data we might want to refer to in our templates in the future.
+We set up a field <code>colors</code>, which we then set to a different color scheme depending on the hostname of the system.</p>
+<p><strong>Don't forget to <code>export</code> any variables you might want to reference in your template tags!</strong></p>
+<p>Now, let's set up a template in our alacritty config file:</p>
+<pre><code class="language-toml">#...
+[colors.primary]
+background = &quot;#ff0000&quot; # {&lt; replace_color(data.colors.background) &gt;}
+foreground = &quot;#ff0000&quot; # {&lt; replace_color(data.colors.foreground) &gt;}
+# ...
+</code></pre>
+<p>Let's break down what's happening here:
+Inside the comments after the color declarations, we're using &quot;inline template tags&quot;, as indicated by the <code>{&lt; ... &gt;}</code> syntax.
+These inline tags transform whatever is before them in the line.
+The tag calls the built-in <code>replace_color</code> function, which looks for a hex-code and replaces it with the value from the <code>data.colors</code> table.</p>
+<p><strong>Let's try it</strong>!
+Run</p>
+<pre><code class="language-bash">$ yolk sync
+</code></pre>
+<p>You will see that, your <code>alacritty.toml</code> has changed, and the colors from your <code>yolk.rhai</code> file have been applied, depending on your hostname.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="git-concepts"><a class="header" href="#git-concepts">Git concepts</a></h1>
+<p>Basic familiarity with git is assumed.</p>
+<h2 id="safeguarding-git"><a class="header" href="#safeguarding-git">Safeguarding git</a></h2>
+<p>Yolk wraps the git CLI to ensure that git only ever interacts with your dotfiles in their canonical state.
+If it didn't do that, you would end up committing the local state of your dotfiles,
+which would conflict with their state from another machine -- which is what yolk is trying to solve.</p>
+<p>To ensure that you're not accidentally using the regular git CLI for your dotfiles, it is recommended to &quot;safeguard&quot; your dotfiles' git directory.
+To do this, simply run</p>
+<pre><code class="language-bash">$ yolk safeguard
+</code></pre>
+<p>after cloning or initializing your dotfiles.</p>
+<p>This simply renames the <code>.git</code> directory to <code>.yolk_git</code>, which means the regular git CLI won't see the repository anymore.
+You are now more or less forced to use the <code>yolk git</code> command instead -- which conveniently doesn't just ensure consistency of the git state,
+but also works from anywhere in your filesystem!</p>
+<h2 id="cloning-your-dotfiles"><a class="header" href="#cloning-your-dotfiles">Cloning your dotfiles</a></h2>
+<p>To clone your dotfiles on a new machine, simply clone the repository to <code>.config/yolk</code>, and safeguard your git directory.</p>
+<pre><code class="language-bash">$ git clone &lt;your-dots-repo&gt; &quot;$XDG_CONFIG_HOME/yolk&quot;
+$ yolk safeguard
+</code></pre>
+<p>After that, you can start <code>yolk sync</code>ing your eggs!</p>
+<h2 id="interacting-with-git"><a class="header" href="#interacting-with-git">Interacting with git</a></h2>
+<p>To stage or commit changes, get the git diff or status, you can use the <code>yolk git</code> command, which behaves just like the <code>git</code> CLI.
+So, instead of</p>
+<ul>
+<li><code>git status</code>, you run <code>yolk git status</code>,</li>
+<li><code>git add .</code>, you run <code>yolk git add --all</code>,</li>
+<li><code>git commit -m &quot;cool changes&quot;</code>, you run <code>yolk git commit -m &quot;cool changes</code>,</li>
+</ul>
+<p>and so on.
+This ensures the files are always in the correct canonical state, and makes it possible to interact with a safeguarded git repository.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="eggs"><a class="header" href="#eggs">Eggs</a></h1>
+<p>An egg is one package of configuration, typically for one single application.
+For example, your editor configuration <code>~/.config/nvim</code> would likely be one egg called <code>nvim</code>.</p>
+<p>According to your <code>yolk.rhai</code>, these get deployed on your system, and may contain some templated files.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="templates-in-yolk"><a class="header" href="#templates-in-yolk">Templates in Yolk</a></h1>
+<p>Yolk allows you to use simple templates directly within your config files.
+Those templates will be evaluated whenever you run <code>yolk sync</code> or interact with git (see <a href="./git_concepts.html">Git concepts</a>).</p>
+<p>Expressions within these templates are written in the <a href="https://rhai.rs">Rhai</a> scripting language,
+and have access to a couple special variables that allow you to reference your configuration and system state.</p>
+<p>There are two main kinds of templates in Yolk: <a href="./conditional_templates.html">conditional templates</a> and <a href="templates.html#template-tag-functions">template tag functions</a>.</p>
+<h2 id="preparation"><a class="header" href="#preparation">Preparation</a></h2>
+<p>To make yolk evaluate your file as a template, you need to explicitly tell yolk about it.
+To do this, make sure you include it in the <code>templates</code> list of your eggs deployment configuration in your <code>yolk.rhai</code>:</p>
+<pre><code class="language-rust ignore">export let eggs = #{
+  foo: {
+    targets: &quot;~/.config/foo&quot;,
+    templates: [&quot;foo.toml&quot;],
+  }
+}</code></pre>
+<h2 id="conditionals"><a class="header" href="#conditionals">Conditionals</a></h2>
+<p>You can use <a href="./conditional_templates.html">Conditional template elements</a> to conditionally include or exclude parts of your configuration.
+Let's take a look at a simple example:</p>
+<pre><code class="language-toml"># {% if SYSTEM.hostname == &quot;epic-desktop&quot; %}
+displays = [&quot;DP-1&quot;, &quot;DP-2&quot;]
+# {% else %}
+displays = [&quot;eDP-1&quot;]
+# {% end %}
+</code></pre>
+<p>Once you run <code>yolk sync</code>, yolk will evaluate the condition and comment out the block that doesn't apply.
+For example, on your laptop, this config would be turned into:</p>
+<pre><code class="language-toml"># {% if SYSTEM.hostname == &quot;epic-desktop&quot; %}
+#&lt;yolk&gt; displays = [&quot;DP-1&quot;, &quot;DP-2&quot;]
+# {% else %}
+displays = [&quot;eDP-1&quot;]
+# {% end %}
+</code></pre>
+<h2 id="template-tag-functions"><a class="header" href="#template-tag-functions">Template tag functions</a></h2>
+<p>In addition to conditionals, Yolk provides a wide variety of functions to <em>edit</em> your configuration, such as to insert values from, say, your color theme.
+These are regular rhai functions that modify their attached block of text (see below).</p>
+<p>All of the built-in template tag functions are documented in the <a href="./rhai_docs/template.html">Rhai reference</a>,
+and you can also <a href="./custom_template_functions.html">define your own!</a></p>
+<h3 id="different-types-of-tags"><a class="header" href="#different-types-of-tags">Different types of tags</a></h3>
+<p>Yolk supports three different types of tags:</p>
+<ul>
+<li>Next-line tags (<code>{# ... #}</code>): These tags operate on the line following the tag.</li>
+<li>Inline tags (<code>{&lt; ... &gt;}</code>): These tags operate on everything before the tag within the same line.</li>
+<li>Block tags (<code>{% ... %} ... {% end %}</code>): These tags operate on everything between the tag and the corresponding <code>{% end %}</code> tag.</li>
+</ul>
+<p>You can use whichever of these you want, wherever you want. For example, all of these do the same:</p>
+<pre><code class="language-toml">background_color = &quot;#000000&quot; # {&lt; replace_color(colors.background) &gt;}
+
+# {# replace_color(colors.background) #}
+background_color = &quot;#000000&quot;
+
+# {% replace_color(colors.background) %}
+background_color = &quot;#000000&quot;
+# {% end %}
+</code></pre>
+<h3 id="example-templating-your-color-scheme"><a class="header" href="#example-templating-your-color-scheme">Example: Templating your color scheme</a></h3>
+<p>In many cases, you'll want to make specific values, such as colors or paths, be set through one central source, rather than specifying them in every config file.
+Yolk allows you to do this (and more) by using various template functions.
+For example, the <code>replace_quoted</code> directive takes any value and replaces whatever is in quotes with the result of the expression.</p>
+<pre><code class="language-toml"># {# replace_quoted(colors.background) #}
+background_color = &quot;#000000&quot;
+# {# replace_quoted(colors.foreground) #}
+foreground_color = &quot;#ffffff&quot;
+</code></pre>
+<p>After running <code>yolk sync</code>, yolk will replace the regex patterns with the corresponding result of the Lua expression.
+For example, depending on how you configured your <code>colors</code> in your <code>yolk.rhai</code>, this could turn into:</p>
+<pre><code class="language-toml"># {# replace_quoted(colors.background) #}
+background_color = &quot;#282828&quot;
+# {# replace_quoted(colors.foreground) #}
+foreground_color = &quot;#ebdbb2&quot;
+</code></pre>
+<p>Yolk will refuse to evaluate directives that are non-reversible (i.e. if you <code>replace_re</code>d <code>&quot;.*&quot;</code> with <code>foo</code>, as <code>foo</code> will no longer match that regex pattern).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-yolkrhai-file"><a class="header" href="#the-yolkrhai-file">The yolk.rhai file</a></h1>
+<p>The <code>yolk.rhai</code> file is the heart of your Yolk configuration.</p>
+<p>It's where you define all of your <a href="eggs.html">eggs</a> (packages), as well as export any variables and functionality you will then refer to inside your <a href="templates.html">templates</a>.</p>
+<p>If you're familiar with <a href="https://rhai.rs/">Rhai</a>, this is loaded as a module, imported into the global scope of your template tags.</p>
+<h2 id="basic-structure"><a class="header" href="#basic-structure">Basic structure</a></h2>
+<p>The <code>yolk.rhai</code> file is a Rhai script that is run by Yolk to generate your configuration.
+Everything you declare in <code>yolk.rhai</code> will be available to use in your templates.</p>
+<p>Your <code>yolk.rhai</code> needs to define one special variable called <code>eggs</code>.
+This is a map of all the <a href="./eggs.html">eggs</a> you have in your egg directory,
+which describes where their files should be deployed to,
+and which files should be treated as template files.</p>
+<p>Let's look at an example:</p>
+<pre><code class="language-rust ignore">export let eggs = #{
+    foot: #{
+        targets: &quot;~/.config/foot&quot;,
+        templates: [&quot;foot.ini&quot;],
+    },
+    zsh: #{
+        targets: #{
+            &quot;.zshrc&quot;: &quot;~/.config/zsh/.zshrc&quot;,
+            &quot;.zshenv&quot;: &quot;~/.zshenv&quot;,
+        },
+        main_file: &quot;.zshrc&quot;
+    },
+    nvim: #{
+        targets: &quot;~/.config/nvim&quot;,
+        // Note that you can use shell-style glob patterns for the templates list
+        templates: [&quot;**/*.lua&quot;],
+    },
+    niri: #{
+        targets: &quot;~/.config/niri&quot;,
+        templates: [&quot;config.kdl&quot;],
+        enabled: SYSTEM.hostname == &quot;cool-desktop&quot;,
+    },
+    alacritty: &quot;~/.config/alacritty&quot;,
+    // This uses the `merge` deployment strategy, which
+    // will merge the directory structures during deployment,
+    // allowing a stow-style pattern
+    // of mirroring your home directory structure in your egg dir
+    zed: { targets: &quot;~&quot;, strategy: &quot;merge&quot; }
+}</code></pre>
+<p>now, let's break this down.
+For every entry in our <code>~/.config/yolk/eggs</code> directory, we have a corresponding egg configuration here in the eggs object.
+This configuration can either just be the path where the eggs files should be deployed,
+or an object.</p>
+<p>If it's an object, it can contain the following fields:</p>
+<h4 id="enabled"><a class="header" href="#enabled"><code>enabled</code></a></h4>
+<p>a boolean, describing whether this egg should be deployed or not.
+This is useful if you only want to deploy an egg on some systems, or depending on some other condition.</p>
+<h4 id="targets"><a class="header" href="#targets"><code>targets</code></a></h4>
+<p>Either the path where to deploy the egg, or an object with mappings from file inside the egg directory to the target path.</p>
+<p>Providing the string <code>&quot;~/.config/foot&quot;</code> is a short for <code>#{ &quot;.&quot;: &quot;~/.config/foot&quot;}</code>.</p>
+<h4 id="strategy"><a class="header" href="#strategy"><code>strategy</code></a></h4>
+<p>Either <code>&quot;put&quot;</code> or <code>&quot;merge&quot;</code>. Defaults to <code>put</code>.</p>
+<ul>
+<li>
+<p>In <strong>put</strong> mode, yolk will create a symlink for each mapping from egg directory entry to target path.
+If a directory or file already exists, Yolk will refuse to create the symlink.</p>
+</li>
+<li>
+<p>In <strong>merge</strong> mode, yolk will merge the directory structures during deployment.
+This means, if you want to use a stow-style approach, and have the egg directory mirror your home directory structure, you can use
+<code>&quot;~&quot;</code> (or <code>#{&quot;.&quot;: &quot;~&quot;}</code>) as the targets value.</p>
+</li>
+</ul>
+<h4 id="templates"><a class="header" href="#templates"><code>templates</code></a></h4>
+<p>A list of files that should be treated as templates.
+This list can contain shell-style glob patterns, so <code>*.lua</code> will expand to all lua files in the egg directory.
+Files that are not listed here will not be edited by yolk during <code>yolk sync</code>!</p>
+<h4 id="main_file"><a class="header" href="#main_file"><code>main_file</code></a></h4>
+<p>A path, relative to the egg directory, that will be opened when you run <code>yolk edit &lt;eggname&gt;</code>.</p>
+<h2 id="available-variables"><a class="header" href="#available-variables">Available variables</a></h2>
+<p>To generate your configuration depending on your system, there are a couple global variables that you can reference inside the <code>yolk.rhai</code> file.
+The <code>SYSTEM</code> variable is a table containing data about your local system.
+If the config is being executed in canonical mode, the <code>SYSTEM</code> table will instead contain a fixed set of values that will be the same across all systems.</p>
+<p>To know if you're currently in local or canonical mode, you can check the <code>LOCAL</code> variable.</p>
+<p><strong>Tip:</strong>
+To look at the contents of those variables or try out your logic, you can always use the <code>yolk eval</code> command.</p>
+<pre><code class="language-bash">$ yolk eval 'print(SYSTEM)'
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conditionals-1"><a class="header" href="#conditionals-1">Conditionals</a></h1>
+<p>Yolk allows you to conditionally include parts of your configuration based on the state of your system.
+It achieves this by commenting or un-commenting blocks of your file.</p>
+<p>Conditionals use special template tags that start with the keyword <code>if</code>,
+which instructs Yolk to treat the following expression as a conditional,
+rather than a regular template tag function.</p>
+<h2 id="multiline-conditionals"><a class="header" href="#multiline-conditionals">Multiline conditionals</a></h2>
+<p>The most common form of conditional block is using the multiline template tag syntax.
+Let's type out a simple example:</p>
+<pre><code class="language-toml"># {% if SYSTEM.hostname == &quot;epic-desktop&quot; %}
+displays = [&quot;DP-1&quot;, &quot;DP-2&quot;]
+# {% if SYSTEM.hostname == &quot;business-desktop&quot; %}
+displays = [&quot;HDMI-1&quot;, &quot;HDMI-2&quot;]
+# {% else %}
+displays = [&quot;eDP-1&quot;]
+# {% end %}
+</code></pre>
+<p>Now, this is of course not a valid configuration just yet, as we're setting the <code>displays</code> variable thrice.</p>
+<p>However, once you run <code>yolk sync</code>, yolk will evaluate the condition and comment out the blocks that don't apply.
+For example, on your laptop, this config might be turned into:</p>
+<pre><code class="language-toml"># {% if SYSTEM.hostname == &quot;epic-desktop&quot; %}
+#&lt;yolk&gt; displays = [&quot;DP-1&quot;, &quot;DP-2&quot;]
+# {% if SYSTEM.hostname == &quot;business-desktop&quot; %}
+#&lt;yolk&gt; displays = [&quot;HDMI-1&quot;, &quot;HDMI-2&quot;]
+# {% else %}
+displays = [&quot;eDP-1&quot;]
+# {% end %}
+</code></pre>
+<p>Note thta yolk added a special <code>&lt;yolk&gt;</code> prefix to the comments.
+Yolk conditionals will only ever add or remove comments with this prefix,
+which means that you can still have regular comments in those conditional blocks.</p>
+<h2 id="inline-and-next-line-conditionals"><a class="header" href="#inline-and-next-line-conditionals">Inline and Next-line conditionals</a></h2>
+<p>A more simplified version of this is also supported in inline and next-line tags:</p>
+<pre><code class="language-kdl">enable_variable_refreshrate // {&lt; if data.is_desktop() &gt;}
+
+// {# if data.enable_xwayland #}
+spawn-at-startup &quot;xwayland-satellite&quot;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="custom-template-functions"><a class="header" href="#custom-template-functions">Custom Template Functions</a></h1>
+<p>Given that all of the template functions are just regular Rhai code, you might ask yourself if you can define your own template tag functions.
+The answer is YES!</p>
+<h2 id="how-do-template-tag-functions-work"><a class="header" href="#how-do-template-tag-functions-work">How do template tag functions work</a></h2>
+<p>Template tag functions are executed in a special context, in which a function called <code>get_yolk_text()</code> is availale.
+This variable contains the text block that the template tag operates on.
+A template tag function then returns a string which yolk will replace the old text block with.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>Let's define a simple, useless template tag function in your <code>yolk.rhai</code>.</p>
+<pre><code class="language-rust ignore">fn scream_or_not(should_scream)
+  if should_scream {
+    get_yolk_text().to_upper()
+  } else {
+    get_yolk_text().to_lower()
+  }
+}</code></pre>
+<p>That's it!
+Now, we can go into any templated file, and use our new template tag function.</p>
+<pre><code class="language-toml"># {# scream_or_not(SYSTEM.hostname == &quot;loud-host&quot;) #}
+screaming = &quot;HELLO&quot;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="function-reference"><a class="header" href="#function-reference">Function Reference</a></h1>
+<p>Here you can find the different functions available for use in yolk.
+This documentation is generated through the code,
+so while it should be very accurate,
+the type signatures might look a bit confusing in some places.</p>
+<div style="break-before: page; page-break-before: always;"></div><div class='rhai-doc'>
+<h1 id="template-tag-functions-1"><a class="header" href="#template-tag-functions-1">Template tag functions</a></h1>
+<p>Yolk template tags simply execute rhai functions that transform the block of text the tag operates on.</p>
+<p>Quick reminder: Yolk has three different types of tags, that differ only in what text they operate on:</p>
+<ul>
+<li>Next-line tags (<code>{# ... #}</code>): These tags operate on the line following the tag.</li>
+<li>Inline tags (<code>{&lt; ... &gt;}</code>): These tags operate on everything before the tag within the same line.</li>
+<li>Block tags (<code>{% ... %} ... {% end %}</code>): These tags operate on everything between the tag and the corresponding <code>{% end %}</code> tag.</li>
+</ul>
+<p>Inside these tags, you can call any of Yolks template tag functions (Or, in fact, any rhai expression that returns a string).</p>
+<hr />
+<p><strong>namespace</strong>: <code>template</code></p>
+<hr />
+<div class='doc-block'>
+<h2 id="replace_between"><a class="header" href="#replace_between">replace_between</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_between(left: &amp;str, right: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rbet</code>.</p>
+<p>Replaces the text between two delimiters with the <code>replacement</code>.</p>
+<h4 id="example-1"><a class="header" href="#example-1">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = (Arial) # {&lt; replace_between(`(`, `)`, data.font.ui) &gt;}
+</code></pre>
+<p>Note: we don't need to include the quotes in the replacement here.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_color"><a class="header" href="#replace_color">replace_color</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_color(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rcol</code>.</p>
+<p>Replaces a hex color value with a new hex color.</p>
+<h4 id="example-2"><a class="header" href="#example-2">Example</a></h4>
+<pre><code class="language-handlebars">background_color = &quot;#282828&quot; # {&lt; replace_color(data.colors.bg) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_in"><a class="header" href="#replace_in">replace_in</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_in(between: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rin</code>.</p>
+<p>Replaces the text between two delimiters with the <code>replacement</code>.</p>
+<h4 id="example-3"><a class="header" href="#example-3">Example</a></h4>
+<pre><code class="language-toml">ui_font = &quot;Arial&quot; # {&lt; replace_in(`&quot;`, data.font.ui) &gt;}
+</code></pre>
+<p>Note: we don't need to include the quotes in the replacement here.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_number"><a class="header" href="#replace_number">replace_number</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_number(replacement: Dynamic) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rnum</code>.</p>
+<p>Replaces a number with another number.</p>
+<h4 id="example-4"><a class="header" href="#example-4">Example</a></h4>
+<pre><code class="language-handlebars">cursor_size = 32 # {&lt; replace_number(data.cursor_size) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_quoted"><a class="header" href="#replace_quoted">replace_quoted</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_quoted(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rq</code>.</p>
+<p>Replaces a value between quotes with another value</p>
+<h4 id="example-5"><a class="header" href="#example-5">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = &quot;Arial&quot; # {&lt; replace_quoted(data.font.ui) &gt;}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_re"><a class="header" href="#replace_re">replace_re</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_re(regex: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rr</code>.</p>
+<p>Replaces all occurrences of a Regex <code>pattern</code> with <code>replacement</code> in the text.</p>
+<h4 id="example-6"><a class="header" href="#example-6">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = &quot;Arial&quot; # {&lt; replace_re(`&quot;.*&quot;`, `&quot;{data.font.ui}&quot;`) &gt;}
+</code></pre>
+<p>Note that the replacement value needs to contain the quotes, as those are also matched against in the regex pattern.
+Otherwise, we would end up with invalid toml.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace_value"><a class="header" href="#replace_value">replace_value</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace_value(replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p><strong>shorthand</strong>: <code>rv</code>.</p>
+<p>Replaces a value (without spaces) after a <code>:</code> or a <code>=</code> with another value</p>
+<h4 id="example-7"><a class="header" href="#example-7">Example</a></h4>
+<pre><code class="language-handlebars">ui_font = Arial # {&lt; replace_value(data.font.ui) &gt;}
+</code></pre>
+</div>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><div class='rhai-doc'>
+<h1 id="utility-functions"><a class="header" href="#utility-functions">Utility functions</a></h1>
+<p>A collection of utility functions</p>
+<hr />
+<p><strong>namespace</strong>: <code>utils</code></p>
+<hr />
+<div class='doc-block'>
+<h2 id="color_hex_to_rgb"><a class="header" href="#color_hex_to_rgb">color_hex_to_rgb</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">color_hex_to_rgb(hex_string: &amp;str) -&gt; Result&lt;Map&gt;</code></pre>
+<p>Convert a hex color string to an RGB map.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="color_hex_to_rgb_str"><a class="header" href="#color_hex_to_rgb_str">color_hex_to_rgb_str</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">color_hex_to_rgb_str(hex_string: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p>Convert a hex color string to an RGB string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="color_hex_to_rgba_str"><a class="header" href="#color_hex_to_rgba_str">color_hex_to_rgba_str</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">color_hex_to_rgba_str(hex_string: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p>Convert a hex color string to an RGBA string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="color_rgb_to_hex"><a class="header" href="#color_rgb_to_hex">color_rgb_to_hex</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">color_rgb_to_hex(rgb_table: Map) -&gt; Result&lt;String&gt;</code></pre>
+<p>Convert an RGB map to a hex color string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="regex_captures"><a class="header" href="#regex_captures">regex_captures</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">regex_captures(pattern: &amp;str, s: &amp;str) -&gt; Result&lt;Option&lt;Vec&lt;String&gt;&gt;&gt;</code></pre>
+<p>Match a string against a regex pattern and return the capture groups as a list.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="regex_match"><a class="header" href="#regex_match">regex_match</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">regex_match(pattern: &amp;str, haystack: &amp;str) -&gt; Result&lt;bool&gt;</code></pre>
+<p>Check if a given string matches a given regex pattern.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="regex_replace"><a class="header" href="#regex_replace">regex_replace</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">regex_replace(pattern: &amp;str, haystack: &amp;str, replacement: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p>Replace a regex pattern in a string with a replacement.</p>
+</div>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><div class='rhai-doc'>
+<h1 id="io-functions"><a class="header" href="#io-functions">IO Functions</a></h1>
+<p>A collection of functions that can read the environment and filesystem.
+These return standardized values in canonical mode.</p>
+<hr />
+<p><strong>namespace</strong>: <code>io</code></p>
+<hr />
+<div class='doc-block'>
+<h2 id="command_available"><a class="header" href="#command_available">command_available</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">command_available(name: &amp;str) -&gt; Result&lt;bool&gt;</code></pre>
+<p>Check if a given command is available</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="env"><a class="header" href="#env">env</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">env(name: &amp;str, def: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p>Read an environment variable, or return the given default</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="path_exists"><a class="header" href="#path_exists">path_exists</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">path_exists(p: &amp;str) -&gt; Result&lt;bool&gt;</code></pre>
+<p>Check if something exists at a given path</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="path_is_dir"><a class="header" href="#path_is_dir">path_is_dir</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">path_is_dir(p: &amp;str) -&gt; Result&lt;bool&gt;</code></pre>
+<p>Check if the given path is a directory</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="path_is_file"><a class="header" href="#path_is_file">path_is_file</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">path_is_file(p: &amp;str) -&gt; Result&lt;bool&gt;</code></pre>
+<p>Check if the given path is a file</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="read_dir"><a class="header" href="#read_dir">read_dir</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">read_dir(p: &amp;str) -&gt; Result&lt;Vec&lt;String&gt;&gt;</code></pre>
+<p>Read the children of a given dir</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="read_file"><a class="header" href="#read_file">read_file</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">read_file(p: &amp;str) -&gt; Result&lt;String&gt;</code></pre>
+<p>Read the contents of a given file</p>
+</div>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><div class='rhai-doc'>
+<h1 id="rhai-standard-library-builtins"><a class="header" href="#rhai-standard-library-builtins">Rhai Standard Library builtins</a></h1>
+<p>Rhai standard library functions.</p>
+<p>Note that the typesignatures here do look a bit weird.
+This is simply a result of how we generate the documentation,
+and can't easily be improved.</p>
+<p>Just try your best to ignore it...</p>
+<hr />
+<p><strong>namespace</strong>: <code>global</code></p>
+<hr />
+<div class='doc-block'>
+<h2 id="arrayis_empty"><a class="header" href="#arrayis_empty">Array.is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_empty(array: &amp;mut Array) -&gt; bool</code></pre>
+<p>Return true if the array is empty.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="arraylen"><a class="header" href="#arraylen">Array.len</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$len(array: &amp;mut Array) -&gt; i64</code></pre>
+<p>Number of elements in the array.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="blobis_empty"><a class="header" href="#blobis_empty">Blob.is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_empty(blob: &amp;mut Blob) -&gt; bool</code></pre>
+<p>Return true if the BLOB is empty.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="bloblen"><a class="header" href="#bloblen">Blob.len</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$len(blob: &amp;mut Blob) -&gt; i64</code></pre>
+<p>Return the length of the BLOB.</p>
+<h4 id="example-8"><a class="header" href="#example-8">Example</a></h4>
+<pre><code class="language-rhai">let b = blob(10, 0x42);
+
+print(b);           // prints &quot;[4242424242424242 4242]&quot;
+
+print(b.len());     // prints 10
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="e"><a class="header" href="#e">E</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">E() -&gt; f64</code></pre>
+<p>Return the natural number <em>e</em>.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="instantelapsed"><a class="header" href="#instantelapsed">Instant.elapsed</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$elapsed(timestamp: Instant) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return the number of seconds between the current system time and the timestamp.</p>
+<h4 id="example-9"><a class="header" href="#example-9">Example</a></h4>
+<pre><code class="language-rhai">let now = timestamp();
+
+sleep(10.0);            // sleep for 10 seconds
+
+print(now.elapsed);     // prints 10.???
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="pi"><a class="header" href="#pi">PI</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">PI() -&gt; f64</code></pre>
+<p>Return the number π.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeend"><a class="header" href="#rangeend">Range<int>.end</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$end(range: &amp;mut Range&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the end of the exclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeis_empty"><a class="header" href="#rangeis_empty">Range<int>.is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_empty(range: &amp;mut Range&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return true if the range contains no items.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeis_exclusive"><a class="header" href="#rangeis_exclusive">Range<int>.is_exclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_exclusive(range: &amp;mut Range&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is exclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeis_inclusive"><a class="header" href="#rangeis_inclusive">Range<int>.is_inclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_inclusive(range: &amp;mut Range&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is inclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangestart"><a class="header" href="#rangestart">Range<int>.start</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$start(range: &amp;mut Range&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the start of the exclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeinclusiveend"><a class="header" href="#rangeinclusiveend">RangeInclusive<int>.end</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$end(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the end of the inclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeinclusiveis_empty"><a class="header" href="#rangeinclusiveis_empty">RangeInclusive<int>.is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_empty(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return true if the range contains no items.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeinclusiveis_exclusive"><a class="header" href="#rangeinclusiveis_exclusive">RangeInclusive<int>.is_exclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_exclusive(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is exclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeinclusiveis_inclusive"><a class="header" href="#rangeinclusiveis_inclusive">RangeInclusive<int>.is_inclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_inclusive(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is inclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="rangeinclusivestart"><a class="header" href="#rangeinclusivestart">RangeInclusive<int>.start</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$start(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the start of the inclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="stringbytes"><a class="header" href="#stringbytes">String.bytes</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$bytes(string: &amp;str) -&gt; i64</code></pre>
+<p>Return the length of the string, in number of bytes used to store it in UTF-8 encoding.</p>
+<h4 id="example-10"><a class="header" href="#example-10">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;朝には紅顔ありて夕べには白骨となる&quot;;
+
+print(text.bytes);      // prints 51
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="stringchars"><a class="header" href="#stringchars">String.chars</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$chars(string: &amp;str) -&gt; CharsStream</code></pre>
+<p>Return an iterator over all the characters in the string.</p>
+<h4 id="example-11"><a class="header" href="#example-11">Example</a></h4>
+<pre><code class="language-rhai">for ch in &quot;hello, world!&quot;.chars {&quot;
+print(ch);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="stringis_empty"><a class="header" href="#stringis_empty">String.is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_empty(string: &amp;str) -&gt; bool</code></pre>
+<p>Return true if the string is empty.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="stringlen"><a class="header" href="#stringlen">String.len</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$len(string: &amp;str) -&gt; i64</code></pre>
+<p>Return the length of the string, in number of characters.</p>
+<h4 id="example-12"><a class="header" href="#example-12">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;朝には紅顔ありて夕べには白骨となる&quot;;
+
+print(text.len);        // prints 17
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="abs"><a class="header" href="#abs">abs</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">abs(x: i32) -&gt; Result&lt;i32, Box&lt;EvalAltResult&gt;&gt;
+abs(x: i128) -&gt; Result&lt;i128, Box&lt;EvalAltResult&gt;&gt;
+abs(x: i16) -&gt; Result&lt;i16, Box&lt;EvalAltResult&gt;&gt;
+abs(x: i8) -&gt; Result&lt;i8, Box&lt;EvalAltResult&gt;&gt;
+abs(x: f32) -&gt; f32
+abs(x: f64) -&gt; f64
+abs(x: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return the absolute value of the number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="acos"><a class="header" href="#acos">acos</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">acos(x: f64) -&gt; f64</code></pre>
+<p>Return the arc-cosine of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="acosh"><a class="header" href="#acosh">acosh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">acosh(x: f64) -&gt; f64</code></pre>
+<p>Return the arc-hyperbolic-cosine of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="all"><a class="header" href="#all">all</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">all(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;
+all(array: &amp;mut Array, filter: &amp;str) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return <code>true</code> if all elements in the array return <code>true</code> when applied the <code>filter</code> function.</p>
+<h4 id="no-function-parameter"><a class="header" href="#no-function-parameter">No Function Parameter</a></h4>
+<p>Array element (mutable) is bound to <code>this</code>.</p>
+<p>This method is marked <em>pure</em>; the <code>filter</code> function should not mutate array elements.</p>
+<h4 id="function-parameters"><a class="header" href="#function-parameters">Function Parameters</a></h4>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-13"><a class="header" href="#example-13">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 5];
+
+print(x.all(|v| v &gt; 3));        // prints false
+
+print(x.all(|v| v &gt; 1));        // prints true
+
+print(x.all(|v, i| i &gt; v));     // prints false
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="append"><a class="header" href="#append">append</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">append(array: &amp;mut Array, new_array: Array)
+append(blob: &amp;mut Blob, character: char)
+append(string: &amp;mut ImmutableString, mut item: Dynamic)
+append(string: &amp;mut ImmutableString, utf8: Blob)
+append(blob1: &amp;mut Blob, blob2: Blob)
+append(blob: &amp;mut Blob, string: &amp;str)
+append(blob: &amp;mut Blob, value: i64)</code></pre>
+<p>Add all the elements of another array to the end of the array.</p>
+<h4 id="example-14"><a class="header" href="#example-14">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3];
+let y = [true, 'x'];
+
+x.append(y);
+
+print(x);       // prints &quot;[1, 2, 3, true, 'x']&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="as_string"><a class="header" href="#as_string">as_string</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">as_string(blob: Blob) -&gt; String</code></pre>
+<p>Convert the BLOB into a string.</p>
+<p>The byte stream must be valid UTF-8, otherwise an error is raised.</p>
+<h4 id="example-15"><a class="header" href="#example-15">Example</a></h4>
+<pre><code class="language-rhai">let b = blob(5, 0x42);
+
+let x = b.as_string();
+
+print(x);       // prints &quot;FFFFF&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="asin"><a class="header" href="#asin">asin</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">asin(x: f64) -&gt; f64</code></pre>
+<p>Return the arc-sine of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="asinh"><a class="header" href="#asinh">asinh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">asinh(x: f64) -&gt; f64</code></pre>
+<p>Return the arc-hyperbolic-sine of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="atan"><a class="header" href="#atan">atan</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">atan(x: f64) -&gt; f64
+atan(x: f64, y: f64) -&gt; f64</code></pre>
+<p>Return the arc-tangent of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="atanh"><a class="header" href="#atanh">atanh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">atanh(x: f64) -&gt; f64</code></pre>
+<p>Return the arc-hyperbolic-tangent of the floating-point number, in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="bits"><a class="header" href="#bits">bits</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">bits(value: i64) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;
+bits(value: i64, range: RangeInclusive&lt;i64&gt;) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;
+bits(value: i64, from: i64) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;
+bits(value: i64, range: Range&lt;i64&gt;) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;
+bits(value: i64, from: i64, len: i64) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return an iterator over all the bits in the number.</p>
+<h4 id="example-16"><a class="header" href="#example-16">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+for bit in x.bits() {
+print(bit);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="blob"><a class="header" href="#blob">blob</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">blob() -&gt; Blob
+blob(len: i64) -&gt; Result&lt;Blob, Box&lt;EvalAltResult&gt;&gt;
+blob(len: i64, value: i64) -&gt; Result&lt;Blob, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return a new, empty BLOB.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="bytes"><a class="header" href="#bytes">bytes</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">bytes(string: &amp;str) -&gt; i64</code></pre>
+<p>Return the length of the string, in number of bytes used to store it in UTF-8 encoding.</p>
+<h4 id="example-17"><a class="header" href="#example-17">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;朝には紅顔ありて夕べには白骨となる&quot;;
+
+print(text.bytes);      // prints 51
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="ceiling"><a class="header" href="#ceiling">ceiling</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">ceiling(x: f64) -&gt; f64</code></pre>
+<p>Return the smallest whole number larger than or equals to the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="chars"><a class="header" href="#chars">chars</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">chars(string: &amp;str) -&gt; CharsStream
+chars(string: &amp;str, range: Range&lt;i64&gt;) -&gt; CharsStream
+chars(string: &amp;str, start: i64) -&gt; CharsStream
+chars(string: &amp;str, range: RangeInclusive&lt;i64&gt;) -&gt; CharsStream
+chars(string: &amp;str, start: i64, len: i64) -&gt; CharsStream</code></pre>
+<p>Return an iterator over the characters in the string.</p>
+<h4 id="example-18"><a class="header" href="#example-18">Example</a></h4>
+<pre><code class="language-rhai">for ch in &quot;hello, world!&quot;.chars() {
+print(ch);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="chop"><a class="header" href="#chop">chop</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">chop(blob: &amp;mut Blob, len: i64)
+chop(array: &amp;mut Array, len: i64)</code></pre>
+<p>Cut off the head of the BLOB, leaving a tail of the specified length.</p>
+<ul>
+<li>If <code>len</code> ≤ 0, the BLOB is cleared.</li>
+<li>If <code>len</code> ≥ length of BLOB, the BLOB is not modified.</li>
+</ul>
+<h4 id="example-19"><a class="header" href="#example-19">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+b.chop(3);
+
+print(b);           // prints &quot;[030405]&quot;
+
+b.chop(10);
+
+print(b);           // prints &quot;[030405]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="clear"><a class="header" href="#clear">clear</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">clear(string: &amp;mut ImmutableString)
+clear(array: &amp;mut Array)
+clear(map: &amp;mut Map)
+clear(blob: &amp;mut Blob)</code></pre>
+<p>Clear the string, making it empty.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="contains"><a class="header" href="#contains">contains</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">contains(array: &amp;mut Array, value: Dynamic) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;
+contains(string: &amp;str, match_string: &amp;str) -&gt; bool
+contains(range: &amp;mut Range&lt;i64&gt;, value: i64) -&gt; bool
+contains(blob: &amp;mut Blob, value: i64) -&gt; bool
+contains(range: &amp;mut RangeInclusive&lt;i64&gt;, value: i64) -&gt; bool
+contains(map: &amp;mut Map, property: &amp;str) -&gt; bool
+contains(string: &amp;str, character: char) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the array contains an element that equals <code>value</code>.</p>
+<p>The operator <code>==</code> is used to compare elements with <code>value</code> and must be defined,
+otherwise <code>false</code> is assumed.</p>
+<p>This function also drives the <code>in</code> operator.</p>
+<h4 id="example-20"><a class="header" href="#example-20">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 5];
+
+// The 'in' operator calls 'contains' in the background
+if 4 in x {
+print(&quot;found!&quot;);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="cos"><a class="header" href="#cos">cos</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">cos(x: f64) -&gt; f64</code></pre>
+<p>Return the cosine of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="cosh"><a class="header" href="#cosh">cosh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">cosh(x: f64) -&gt; f64</code></pre>
+<p>Return the hyperbolic cosine of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="crop"><a class="header" href="#crop">crop</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">crop(string: &amp;mut ImmutableString, range: RangeInclusive&lt;i64&gt;)
+crop(string: &amp;mut ImmutableString, start: i64)
+crop(string: &amp;mut ImmutableString, range: Range&lt;i64&gt;)
+crop(string: &amp;mut ImmutableString, start: i64, len: i64)</code></pre>
+<p>Remove all characters from the string except those within an inclusive <code>range</code>.</p>
+<h4 id="example-21"><a class="header" href="#example-21">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world!&quot;;
+
+text.crop(2..=8);
+
+print(text);        // prints &quot;llo, wo&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="debug"><a class="header" href="#debug">debug</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">debug() -&gt; ImmutableString
+debug(character: char) -&gt; ImmutableString
+debug(item: &amp;mut Dynamic) -&gt; ImmutableString
+debug(f: &amp;mut FnPtr) -&gt; ImmutableString
+debug(value: bool) -&gt; ImmutableString
+debug(number: f32) -&gt; ImmutableString
+debug(string: &amp;str) -&gt; ImmutableString
+debug(array: &amp;mut Array) -&gt; ImmutableString
+debug(map: &amp;mut Map) -&gt; ImmutableString
+debug(unit: ()) -&gt; ImmutableString
+debug(number: f64) -&gt; ImmutableString</code></pre>
+<p>Return the empty string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="dedup"><a class="header" href="#dedup">dedup</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">dedup(array: &amp;mut Array)
+dedup(array: &amp;mut Array, comparer: FnPtr)
+dedup(array: &amp;mut Array, comparer: &amp;str) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Remove duplicated <em>consecutive</em> elements from the array.</p>
+<p>The operator <code>==</code> is used to compare elements and must be defined,
+otherwise <code>false</code> is assumed.</p>
+<h4 id="example-22"><a class="header" href="#example-22">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 2, 2, 3, 4, 3, 3, 2, 1];
+
+x.dedup();
+
+print(x);       // prints &quot;[1, 2, 3, 4, 3, 2, 1]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="drain"><a class="header" href="#drain">drain</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">drain(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; Blob
+drain(map: &amp;mut Map, filter: FnPtr) -&gt; Result&lt;Map, Box&lt;EvalAltResult&gt;&gt;
+drain(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; Blob
+drain(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+drain(array: &amp;mut Array, range: RangeInclusive&lt;i64&gt;) -&gt; Array
+drain(array: &amp;mut Array, range: Range&lt;i64&gt;) -&gt; Array
+drain(array: &amp;mut Array, filter: &amp;str) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+drain(array: &amp;mut Array, start: i64, len: i64) -&gt; Array
+drain(blob: &amp;mut Blob, start: i64, len: i64) -&gt; Blob</code></pre>
+<p>Remove all bytes in the BLOB within an exclusive <code>range</code> and return them as a new BLOB.</p>
+<h4 id="example-23"><a class="header" href="#example-23">Example</a></h4>
+<pre><code class="language-rhai">let b1 = blob();
+
+b1 += 1; b1 += 2; b1 += 3; b1 += 4; b1 += 5;
+
+let b2 = b1.drain(1..3);
+
+print(b1);      // prints &quot;[010405]&quot;
+
+print(b2);      // prints &quot;[0203]&quot;
+
+let b3 = b1.drain(2..3);
+
+print(b1);      // prints &quot;[0104]&quot;
+
+print(b3);      // prints &quot;[05]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="elapsed"><a class="header" href="#elapsed">elapsed</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">elapsed(timestamp: Instant) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return the number of seconds between the current system time and the timestamp.</p>
+<h4 id="example-24"><a class="header" href="#example-24">Example</a></h4>
+<pre><code class="language-rhai">let now = timestamp();
+
+sleep(10.0);            // sleep for 10 seconds
+
+print(now.elapsed);     // prints 10.???
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="end"><a class="header" href="#end">end</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">end(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; i64
+end(range: &amp;mut Range&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the end of the inclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="ends_with"><a class="header" href="#ends_with">ends_with</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">ends_with(string: &amp;str, match_string: &amp;str) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the string ends with a specified string.</p>
+<h4 id="example-25"><a class="header" href="#example-25">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world!&quot;;
+
+print(text.ends_with(&quot;world!&quot;));    // prints true
+
+print(text.ends_with(&quot;hello&quot;));     // prints false
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="exit"><a class="header" href="#exit">exit</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">exit() -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+exit(value: Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Exit the script evaluation immediately with <code>()</code> as exit value.</p>
+<h4 id="example-26"><a class="header" href="#example-26">Example</a></h4>
+<pre><code class="language-rhai">exit();
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="exp"><a class="header" href="#exp">exp</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">exp(x: f64) -&gt; f64</code></pre>
+<p>Return the exponential of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="extract"><a class="header" href="#extract">extract</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">extract(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; Blob
+extract(array: &amp;mut Array, start: i64) -&gt; Array
+extract(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; Blob
+extract(array: &amp;mut Array, range: RangeInclusive&lt;i64&gt;) -&gt; Array
+extract(array: &amp;mut Array, range: Range&lt;i64&gt;) -&gt; Array
+extract(blob: &amp;mut Blob, start: i64) -&gt; Blob
+extract(array: &amp;mut Array, start: i64, len: i64) -&gt; Array
+extract(blob: &amp;mut Blob, start: i64, len: i64) -&gt; Blob</code></pre>
+<p>Copy an exclusive <code>range</code> of the BLOB and return it as a new BLOB.</p>
+<h4 id="example-27"><a class="header" href="#example-27">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+print(b.extract(1..3));     // prints &quot;[0203]&quot;
+
+print(b);                   // prints &quot;[0102030405]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="f32is_zero"><a class="header" href="#f32is_zero">f32.is_zero</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_zero(x: f32) -&gt; bool</code></pre>
+<p>Return true if the floating-point number is zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="fill_with"><a class="header" href="#fill_with">fill_with</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">fill_with(map: &amp;mut Map, map2: Map)</code></pre>
+<p>Add all property values of another object map into the object map.
+Only properties that do not originally exist in the object map are added.</p>
+<h4 id="example-28"><a class="header" href="#example-28">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a:1, b:2, c:3};
+let n = #{a: 42, d:0};
+
+m.fill_with(n);
+
+print(m);       // prints &quot;#{a:1, b:2, c:3, d:0}&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="filter"><a class="header" href="#filter">filter</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">filter(map: &amp;mut Map, filter: FnPtr) -&gt; Result&lt;Map, Box&lt;EvalAltResult&gt;&gt;
+filter(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+filter(array: &amp;mut Array, filter_func: &amp;str) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all the elements in the object map, applying a <code>filter</code> function to each
+and return a new collection of all elements that return <code>true</code> as a new object map.</p>
+<h4 id="function-parameters-1"><a class="header" href="#function-parameters-1">Function Parameters</a></h4>
+<ul>
+<li><code>key</code>: current key</li>
+<li><code>value</code> <em>(optional)</em>: copy of element (bound to <code>this</code> if omitted)</li>
+</ul>
+<h4 id="example-29"><a class="header" href="#example-29">Example</a></h4>
+<pre><code class="language-rhai">let x = #{a:1, b:2, c:3, d:4, e:5};
+
+let y = x.filter(|k| this &gt;= 3);
+
+print(y);       // prints #{&quot;c&quot;:3, &quot;d&quot;:4, &quot;e&quot;:5}
+
+let y = x.filter(|k, v| k != &quot;d&quot; &amp;&amp; v &lt; 5);
+
+print(y);       // prints #{&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="find"><a class="header" href="#find">find</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">find(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+find(array: &amp;mut Array, filter: FnPtr, start: i64) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all the elements in the array, applying a <code>filter</code> function to each element
+in turn, and return a copy of the first element that returns <code>true</code>. If no element returns
+<code>true</code>, <code>()</code> is returned.</p>
+<h4 id="no-function-parameter-1"><a class="header" href="#no-function-parameter-1">No Function Parameter</a></h4>
+<p>Array element (mutable) is bound to <code>this</code>.</p>
+<h4 id="function-parameters-2"><a class="header" href="#function-parameters-2">Function Parameters</a></h4>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-30"><a class="header" href="#example-30">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 5, 8, 13];
+
+print(x.find(|v| v &gt; 3));                    // prints 5: 5 &gt; 3
+
+print(x.find(|v| v &gt; 13) ?? &quot;not found&quot;);    // prints &quot;not found&quot;: nothing is &gt; 13
+
+print(x.find(|v, i| v * i &gt; 13));            // prints 5: 3 * 5 &gt; 13
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="find_map"><a class="header" href="#find_map">find_map</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">find_map(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+find_map(array: &amp;mut Array, filter: FnPtr, start: i64) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all the elements in the array, applying a <code>mapper</code> function to each element
+in turn, and return the first result that is not <code>()</code>. Otherwise, <code>()</code> is returned.</p>
+<h4 id="no-function-parameter-2"><a class="header" href="#no-function-parameter-2">No Function Parameter</a></h4>
+<p>Array element (mutable) is bound to <code>this</code>.</p>
+<p>This method is marked <em>pure</em>; the <code>mapper</code> function should not mutate array elements.</p>
+<h4 id="function-parameters-3"><a class="header" href="#function-parameters-3">Function Parameters</a></h4>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-31"><a class="header" href="#example-31">Example</a></h4>
+<pre><code class="language-rhai">let x = [#{alice: 1}, #{bob: 2}, #{clara: 3}];
+
+print(x.find_map(|v| v.alice));                  // prints 1
+
+print(x.find_map(|v| v.dave) ?? &quot;not found&quot;);    // prints &quot;not found&quot;
+
+print(x.find_map(|| this.dave) ?? &quot;not found&quot;);  // prints &quot;not found&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatceiling"><a class="header" href="#floatceiling">float.ceiling</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$ceiling(x: f64) -&gt; f64</code></pre>
+<p>Return the smallest whole number larger than or equals to the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatfloor"><a class="header" href="#floatfloor">float.floor</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$floor(x: f64) -&gt; f64</code></pre>
+<p>Return the largest whole number less than or equals to the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatfraction"><a class="header" href="#floatfraction">float.fraction</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$fraction(x: f64) -&gt; f64</code></pre>
+<p>Return the fractional part of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatint"><a class="header" href="#floatint">float.int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$int(x: f64) -&gt; f64</code></pre>
+<p>Return the integral part of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatis_finite"><a class="header" href="#floatis_finite">float.is_finite</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_finite(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is finite.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatis_infinite"><a class="header" href="#floatis_infinite">float.is_infinite</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_infinite(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is infinite.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatis_nan"><a class="header" href="#floatis_nan">float.is_nan</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_nan(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is <code>NaN</code> (Not A Number).</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatis_zero"><a class="header" href="#floatis_zero">float.is_zero</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_zero(x: f64) -&gt; bool</code></pre>
+<p>Return true if the floating-point number is zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floatround"><a class="header" href="#floatround">float.round</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$round(x: f64) -&gt; f64</code></pre>
+<p>Return the nearest whole number closest to the floating-point number.
+Rounds away from zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="floor"><a class="header" href="#floor">floor</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">floor(x: f64) -&gt; f64</code></pre>
+<p>Return the largest whole number less than or equals to the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="for_each"><a class="header" href="#for_each">for_each</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">for_each(array: &amp;mut Array, map: FnPtr) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all the elements in the array, applying a <code>process</code> function to each element in turn.
+Each element is bound to <code>this</code> before calling the function.</p>
+<h4 id="function-parameters-4"><a class="header" href="#function-parameters-4">Function Parameters</a></h4>
+<ul>
+<li><code>this</code>: bound to array element (mutable)</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-32"><a class="header" href="#example-32">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 5];
+
+x.for_each(|| this *= this);
+
+print(x);       // prints &quot;[1, 4, 9, 16, 25]&quot;
+
+x.for_each(|i| this *= i);
+
+print(x);       // prints &quot;[0, 2, 6, 12, 20]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="fraction"><a class="header" href="#fraction">fraction</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">fraction(x: f64) -&gt; f64</code></pre>
+<p>Return the fractional part of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="get"><a class="header" href="#get">get</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get(blob: &amp;mut Blob, index: i64) -&gt; i64
+get(string: &amp;str, index: i64) -&gt; Dynamic
+get(map: &amp;mut Map, property: &amp;str) -&gt; Dynamic
+get(array: &amp;mut Array, index: i64) -&gt; Dynamic</code></pre>
+<p>Get the byte value at the <code>index</code> position in the BLOB.</p>
+<ul>
+<li>If <code>index</code> &lt; 0, position counts from the end of the BLOB (<code>-1</code> is the last element).</li>
+<li>If <code>index</code> &lt; -length of BLOB, zero is returned.</li>
+<li>If <code>index</code> ≥ length of BLOB, zero is returned.</li>
+</ul>
+<h4 id="example-33"><a class="header" href="#example-33">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+print(b.get(0));        // prints 1
+
+print(b.get(-1));       // prints 5
+
+print(b.get(99));       // prints 0
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="get_bit"><a class="header" href="#get_bit">get_bit</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get_bit(value: i64, bit: i64) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return <code>true</code> if the specified <code>bit</code> in the number is set.</p>
+<p>If <code>bit</code> &lt; 0, position counts from the MSB (Most Significant Bit).</p>
+<h4 id="example-34"><a class="header" href="#example-34">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+print(x.get_bit(5));    // prints false
+
+print(x.get_bit(6));    // prints true
+
+print(x.get_bit(-48));  // prints true on 64-bit
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="get_bits"><a class="header" href="#get_bits">get_bits</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get_bits(value: i64, range: RangeInclusive&lt;i64&gt;) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+get_bits(value: i64, range: Range&lt;i64&gt;) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+get_bits(value: i64, start: i64, bits: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return an inclusive range of bits in the number as a new number.</p>
+<h4 id="example-35"><a class="header" href="#example-35">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+print(x.get_bits(5..=9));       // print 18
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="get_fn_metadata_list"><a class="header" href="#get_fn_metadata_list">get_fn_metadata_list</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get_fn_metadata_list() -&gt; Array
+get_fn_metadata_list(name: &amp;str) -&gt; Array
+get_fn_metadata_list(name: &amp;str, params: i64) -&gt; Array</code></pre>
+<p>Return an array of object maps containing metadata of all script-defined functions.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="hypot"><a class="header" href="#hypot">hypot</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">hypot(x: f64, y: f64) -&gt; f64</code></pre>
+<p>Return the hypotenuse of a triangle with sides <code>x</code> and <code>y</code>.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="index_of"><a class="header" href="#index_of">index_of</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">index_of(array: &amp;mut Array, value: Dynamic) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+index_of(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+index_of(string: &amp;str, find_string: &amp;str) -&gt; i64
+index_of(array: &amp;mut Array, filter: &amp;str) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+index_of(string: &amp;str, character: char) -&gt; i64
+index_of(array: &amp;mut Array, filter: &amp;str, start: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+index_of(array: &amp;mut Array, value: Dynamic, start: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+index_of(string: &amp;str, character: char, start: i64) -&gt; i64
+index_of(string: &amp;str, find_string: &amp;str, start: i64) -&gt; i64
+index_of(array: &amp;mut Array, filter: FnPtr, start: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Find the first element in the array that equals a particular <code>value</code> and return its index.
+If no element equals <code>value</code>, <code>-1</code> is returned.</p>
+<p>The operator <code>==</code> is used to compare elements with <code>value</code> and must be defined,
+otherwise <code>false</code> is assumed.</p>
+<h4 id="example-36"><a class="header" href="#example-36">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 5];
+
+print(x.index_of(4));       // prints 3 (first index)
+
+print(x.index_of(9));       // prints -1
+
+print(x.index_of(&quot;foo&quot;));   // prints -1: strings do not equal numbers
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="insert"><a class="header" href="#insert">insert</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">insert(blob: &amp;mut Blob, index: i64, value: i64)
+insert(array: &amp;mut Array, index: i64, item: Dynamic)</code></pre>
+<p>Add a byte <code>value</code> to the BLOB at a particular <code>index</code> position.</p>
+<ul>
+<li>If <code>index</code> &lt; 0, position counts from the end of the BLOB (<code>-1</code> is the last byte).</li>
+<li>If <code>index</code> &lt; -length of BLOB, the byte value is added to the beginning of the BLOB.</li>
+<li>If <code>index</code> ≥ length of BLOB, the byte value is appended to the end of the BLOB.</li>
+</ul>
+<p>Only the lower 8 bits of the <code>value</code> are used; all other bits are ignored.</p>
+<h4 id="example-37"><a class="header" href="#example-37">Example</a></h4>
+<pre><code class="language-rhai">let b = blob(5, 0x42);
+
+b.insert(2, 0x18);
+
+print(b);       // prints &quot;[4242184242]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="int"><a class="header" href="#int">int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">int(x: f64) -&gt; f64</code></pre>
+<p>Return the integral part of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="intbits"><a class="header" href="#intbits">int.bits</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$bits(value: i64) -&gt; Result&lt;BitRange, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return an iterator over all the bits in the number.</p>
+<h4 id="example-38"><a class="header" href="#example-38">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+for bit in x.bits {
+print(bit);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="intis_even"><a class="header" href="#intis_even">int.is_even</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_even(x: i64) -&gt; bool</code></pre>
+<p>Return true if the number is even.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="intis_odd"><a class="header" href="#intis_odd">int.is_odd</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_odd(x: i64) -&gt; bool</code></pre>
+<p>Return true if the number is odd.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="intis_zero"><a class="header" href="#intis_zero">int.is_zero</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">get$is_zero(x: i64) -&gt; bool</code></pre>
+<p>Return true if the number is zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_anonymous"><a class="header" href="#is_anonymous">is_anonymous</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_anonymous(fn_ptr: &amp;mut FnPtr) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the function is an anonymous function.</p>
+<h4 id="example-39"><a class="header" href="#example-39">Example</a></h4>
+<pre><code class="language-rhai">let f = |x| x * 2;
+
+print(f.is_anonymous);      // prints true
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_empty"><a class="header" href="#is_empty">is_empty</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_empty(blob: &amp;mut Blob) -&gt; bool
+is_empty(array: &amp;mut Array) -&gt; bool
+is_empty(string: &amp;str) -&gt; bool
+is_empty(map: &amp;mut Map) -&gt; bool
+is_empty(range: &amp;mut Range&lt;i64&gt;) -&gt; bool
+is_empty(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return true if the BLOB is empty.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_even"><a class="header" href="#is_even">is_even</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_even(x: i32) -&gt; bool
+is_even(x: u16) -&gt; bool
+is_even(x: i16) -&gt; bool
+is_even(x: i128) -&gt; bool
+is_even(x: i8) -&gt; bool
+is_even(x: u32) -&gt; bool
+is_even(x: u8) -&gt; bool
+is_even(x: u128) -&gt; bool
+is_even(x: i64) -&gt; bool
+is_even(x: u64) -&gt; bool</code></pre>
+<p>Return true if the number is even.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_exclusive"><a class="header" href="#is_exclusive">is_exclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_exclusive(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool
+is_exclusive(range: &amp;mut Range&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is exclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_finite"><a class="header" href="#is_finite">is_finite</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_finite(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is finite.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_inclusive"><a class="header" href="#is_inclusive">is_inclusive</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_inclusive(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; bool
+is_inclusive(range: &amp;mut Range&lt;i64&gt;) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the range is inclusive.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_infinite"><a class="header" href="#is_infinite">is_infinite</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_infinite(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is infinite.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_nan"><a class="header" href="#is_nan">is_nan</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_nan(x: f64) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the floating-point number is <code>NaN</code> (Not A Number).</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_odd"><a class="header" href="#is_odd">is_odd</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_odd(x: i8) -&gt; bool
+is_odd(x: u128) -&gt; bool
+is_odd(x: u8) -&gt; bool
+is_odd(x: u32) -&gt; bool
+is_odd(x: i64) -&gt; bool
+is_odd(x: u64) -&gt; bool
+is_odd(x: i32) -&gt; bool
+is_odd(x: i16) -&gt; bool
+is_odd(x: u16) -&gt; bool
+is_odd(x: i128) -&gt; bool</code></pre>
+<p>Return true if the number is odd.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="is_zero"><a class="header" href="#is_zero">is_zero</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">is_zero(x: i64) -&gt; bool
+is_zero(x: f64) -&gt; bool
+is_zero(x: u64) -&gt; bool
+is_zero(x: f32) -&gt; bool
+is_zero(x: i8) -&gt; bool
+is_zero(x: u8) -&gt; bool
+is_zero(x: u128) -&gt; bool
+is_zero(x: u32) -&gt; bool
+is_zero(x: i16) -&gt; bool
+is_zero(x: u16) -&gt; bool
+is_zero(x: i128) -&gt; bool
+is_zero(x: i32) -&gt; bool</code></pre>
+<p>Return true if the number is zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="keys"><a class="header" href="#keys">keys</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">keys(map: &amp;mut Map) -&gt; Array</code></pre>
+<p>Return an array with all the property names in the object map.</p>
+<h4 id="example-40"><a class="header" href="#example-40">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a:1, b:2, c:3};
+
+print(m.keys());        // prints [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="len"><a class="header" href="#len">len</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">len(string: &amp;str) -&gt; i64
+len(array: &amp;mut Array) -&gt; i64
+len(map: &amp;mut Map) -&gt; i64
+len(blob: &amp;mut Blob) -&gt; i64</code></pre>
+<p>Return the length of the string, in number of characters.</p>
+<h4 id="example-41"><a class="header" href="#example-41">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;朝には紅顔ありて夕べには白骨となる&quot;;
+
+print(text.len);        // prints 17
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="ln"><a class="header" href="#ln">ln</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">ln(x: f64) -&gt; f64</code></pre>
+<p>Return the natural log of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="log"><a class="header" href="#log">log</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">log(x: f64) -&gt; f64
+log(x: f64, base: f64) -&gt; f64</code></pre>
+<p>Return the log of the floating-point number with base 10.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="make_lower"><a class="header" href="#make_lower">make_lower</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">make_lower(character: &amp;mut char)
+make_lower(string: &amp;mut ImmutableString)</code></pre>
+<p>Convert the character to lower-case.</p>
+<h4 id="example-42"><a class="header" href="#example-42">Example</a></h4>
+<pre><code class="language-rhai">let ch = 'A';
+
+ch.make_lower();
+
+print(ch);          // prints 'a'
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="make_upper"><a class="header" href="#make_upper">make_upper</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">make_upper(character: &amp;mut char)
+make_upper(string: &amp;mut ImmutableString)</code></pre>
+<p>Convert the character to upper-case.</p>
+<h4 id="example-43"><a class="header" href="#example-43">Example</a></h4>
+<pre><code class="language-rhai">let ch = 'a';
+
+ch.make_upper();
+
+print(ch);          // prints 'A'
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="map"><a class="header" href="#map">map</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">map(array: &amp;mut Array, map: FnPtr) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+map(array: &amp;mut Array, mapper: &amp;str) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all the elements in the array, applying a <code>mapper</code> function to each element
+in turn, and return the results as a new array.</p>
+<h4 id="no-function-parameter-3"><a class="header" href="#no-function-parameter-3">No Function Parameter</a></h4>
+<p>Array element (mutable) is bound to <code>this</code>.</p>
+<p>This method is marked <em>pure</em>; the <code>mapper</code> function should not mutate array elements.</p>
+<h4 id="function-parameters-5"><a class="header" href="#function-parameters-5">Function Parameters</a></h4>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-44"><a class="header" href="#example-44">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 5];
+
+let y = x.map(|v| v * v);
+
+print(y);       // prints &quot;[1, 4, 9, 16, 25]&quot;
+
+let y = x.map(|v, i| v * i);
+
+print(y);       // prints &quot;[0, 2, 6, 12, 20]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="max"><a class="header" href="#max">max</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">max(x: f64, y: f64) -&gt; f64
+max(x: i32, y: i32) -&gt; i32
+max(x: u128, y: u128) -&gt; u128
+max(x: i8, y: i8) -&gt; i8
+max(char1: char, char2: char) -&gt; char
+max(x: f32, y: i64) -&gt; f32
+max(x: i16, y: i16) -&gt; i16
+max(x: f32, y: f32) -&gt; f32
+max(x: u8, y: u8) -&gt; u8
+max(x: u64, y: u64) -&gt; u64
+max(x: f64, y: f32) -&gt; f64
+max(x: u32, y: u32) -&gt; u32
+max(string1: ImmutableString, string2: ImmutableString) -&gt; ImmutableString
+max(x: f32, y: f64) -&gt; f64
+max(x: i64, y: f64) -&gt; f64
+max(x: i64, y: f32) -&gt; f32
+max(x: i64, y: i64) -&gt; i64
+max(x: u16, y: u16) -&gt; u16
+max(x: f64, y: i64) -&gt; f64
+max(x: i128, y: i128) -&gt; i128</code></pre>
+<p>Return the character that is lexically greater than the other character.</p>
+<h4 id="example-45"><a class="header" href="#example-45">Example</a></h4>
+<pre><code class="language-rhai">max('h', 'w');      // returns 'w'
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="min"><a class="header" href="#min">min</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">min(string1: ImmutableString, string2: ImmutableString) -&gt; ImmutableString
+min(x: f32, y: i64) -&gt; f32
+min(x: f64, y: f32) -&gt; f64
+min(x: u32, y: u32) -&gt; u32
+min(x: u8, y: u8) -&gt; u8
+min(x: u64, y: u64) -&gt; u64
+min(x: i16, y: i16) -&gt; i16
+min(x: f32, y: f32) -&gt; f32
+min(x: i8, y: i8) -&gt; i8
+min(char1: char, char2: char) -&gt; char
+min(x: i32, y: i32) -&gt; i32
+min(x: u128, y: u128) -&gt; u128
+min(x: f64, y: f64) -&gt; f64
+min(x: f64, y: i64) -&gt; f64
+min(x: u16, y: u16) -&gt; u16
+min(x: i128, y: i128) -&gt; i128
+min(x: i64, y: f32) -&gt; f32
+min(x: i64, y: i64) -&gt; i64
+min(x: f32, y: f64) -&gt; f64
+min(x: i64, y: f64) -&gt; f64</code></pre>
+<p>Return the string that is lexically smaller than the other string.</p>
+<h4 id="example-46"><a class="header" href="#example-46">Example</a></h4>
+<pre><code class="language-rhai">min(&quot;hello&quot;, &quot;world&quot;);      // returns &quot;hello&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="mixin"><a class="header" href="#mixin">mixin</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">mixin(map: &amp;mut Map, map2: Map)</code></pre>
+<p>Add all property values of another object map into the object map.
+Existing property values of the same names are replaced.</p>
+<h4 id="example-47"><a class="header" href="#example-47">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a:1, b:2, c:3};
+let n = #{a: 42, d:0};
+
+m.mixin(n);
+
+print(m);       // prints &quot;#{a:42, b:2, c:3, d:0}&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="name"><a class="header" href="#name">name</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">name(fn_ptr: &amp;mut FnPtr) -&gt; ImmutableString</code></pre>
+<p>Return the name of the function.</p>
+<h4 id="example-48"><a class="header" href="#example-48">Example</a></h4>
+<pre><code class="language-rhai">fn double(x) { x * 2 }
+
+let f = Fn(&quot;double&quot;);
+
+print(f.name);      // prints &quot;double&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="pad"><a class="header" href="#pad">pad</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">pad(string: &amp;mut ImmutableString, len: i64, padding: &amp;str) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+pad(blob: &amp;mut Blob, len: i64, value: i64) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+pad(array: &amp;mut Array, len: i64, item: Dynamic) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+pad(string: &amp;mut ImmutableString, len: i64, character: char) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Pad the string to at least the specified number of characters with the specified string.</p>
+<p>If <code>len</code> ≤ length of string, no padding is done.</p>
+<h4 id="example-49"><a class="header" href="#example-49">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello&quot;;
+
+text.pad(10, &quot;(!)&quot;);
+
+print(text);        // prints &quot;hello(!)(!)&quot;
+
+text.pad(8, '***');
+
+print(text);        // prints &quot;hello(!)(!)&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_be_float"><a class="header" href="#parse_be_float">parse_be_float</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_be_float(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; f64
+parse_be_float(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; f64
+parse_be_float(blob: &amp;mut Blob, start: i64, len: i64) -&gt; f64</code></pre>
+<p>Parse the bytes within an exclusive <code>range</code> in the BLOB as a <code>FLOAT</code>
+in big-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>FLOAT</code>, zeros are padded.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>FLOAT</code>, extra bytes are ignored.</li>
+</ul>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_be_int"><a class="header" href="#parse_be_int">parse_be_int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_be_int(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; i64
+parse_be_int(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; i64
+parse_be_int(blob: &amp;mut Blob, start: i64, len: i64) -&gt; i64</code></pre>
+<p>Parse the bytes within an exclusive <code>range</code> in the BLOB as an <code>INT</code>
+in big-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>INT</code>, zeros are padded.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>INT</code>, extra bytes are ignored.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+let x = b.parse_be_int(1..3);   // parse two bytes
+
+print(x.to_hex());              // prints &quot;02030000...00&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_float"><a class="header" href="#parse_float">parse_float</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_float(string: &amp;str) -&gt; Result&lt;f64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Parse a string into a floating-point number.</p>
+<h4 id="example-50"><a class="header" href="#example-50">Example</a></h4>
+<pre><code class="language-rhai">let x = parse_int(&quot;123.456&quot;);
+
+print(x);       // prints 123.456
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_int"><a class="header" href="#parse_int">parse_int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_int(string: &amp;str) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+parse_int(string: &amp;str, radix: i64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Parse a string into an integer number.</p>
+<h4 id="example-51"><a class="header" href="#example-51">Example</a></h4>
+<pre><code class="language-rhai">let x = parse_int(&quot;123&quot;);
+
+print(x);       // prints 123
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_json"><a class="header" href="#parse_json">parse_json</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_json(json: &amp;str) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Parse a JSON string into a value.</p>
+<h4 id="example-52"><a class="header" href="#example-52">Example</a></h4>
+<pre><code class="language-rhai">let m = parse_json(`{&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}`);
+
+print(m);       // prints #{&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_le_float"><a class="header" href="#parse_le_float">parse_le_float</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_le_float(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; f64
+parse_le_float(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; f64
+parse_le_float(blob: &amp;mut Blob, start: i64, len: i64) -&gt; f64</code></pre>
+<p>Parse the bytes within an inclusive <code>range</code> in the BLOB as a <code>FLOAT</code>
+in little-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>FLOAT</code>, zeros are padded.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>FLOAT</code>, extra bytes are ignored.</li>
+</ul>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="parse_le_int"><a class="header" href="#parse_le_int">parse_le_int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">parse_le_int(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; i64
+parse_le_int(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; i64
+parse_le_int(blob: &amp;mut Blob, start: i64, len: i64) -&gt; i64</code></pre>
+<p>Parse the bytes within an inclusive <code>range</code> in the BLOB as an <code>INT</code>
+in little-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>INT</code>, zeros are padded.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>INT</code>, extra bytes are ignored.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+let x = b.parse_le_int(1..=3);  // parse three bytes
+
+print(x.to_hex());              // prints &quot;040302&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="pop"><a class="header" href="#pop">pop</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">pop(blob: &amp;mut Blob) -&gt; i64
+pop(array: &amp;mut Array) -&gt; Dynamic
+pop(string: &amp;mut ImmutableString) -&gt; Dynamic
+pop(string: &amp;mut ImmutableString, len: i64) -&gt; ImmutableString</code></pre>
+<p>Remove the last byte from the BLOB and return it.</p>
+<p>If the BLOB is empty, zero is returned.</p>
+<h4 id="example-53"><a class="header" href="#example-53">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+print(b.pop());         // prints 5
+
+print(b);               // prints &quot;[01020304]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="print"><a class="header" href="#print">print</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">print() -&gt; ImmutableString
+print(value: bool) -&gt; ImmutableString
+print(item: &amp;mut Dynamic) -&gt; ImmutableString
+print(character: char) -&gt; ImmutableString
+print(number: f64) -&gt; ImmutableString
+print(unit: ()) -&gt; ImmutableString
+print(map: &amp;mut Map) -&gt; ImmutableString
+print(array: &amp;mut Array) -&gt; ImmutableString
+print(string: ImmutableString) -&gt; ImmutableString
+print(number: f32) -&gt; ImmutableString</code></pre>
+<p>Return the empty string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="push"><a class="header" href="#push">push</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">push(blob: &amp;mut Blob, value: i64)
+push(array: &amp;mut Array, item: Dynamic)</code></pre>
+<p>Add a new byte <code>value</code> to the end of the BLOB.</p>
+<p>Only the lower 8 bits of the <code>value</code> are used; all other bits are ignored.</p>
+<h4 id="example-54"><a class="header" href="#example-54">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b.push(0x42);
+
+print(b);       // prints &quot;[42]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="range"><a class="header" href="#range">range</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">range(range: std::ops::Range&lt;i64&gt;, step: i64) -&gt; Result&lt;StepRange&lt;i64&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(range: std::ops::Range&lt;u128&gt;, step: u128) -&gt; Result&lt;StepRange&lt;u128&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u8, to: u8) -&gt; Range&lt;u8&gt;
+range(from: u64, to: u64) -&gt; Range&lt;u64&gt;
+range(range: std::ops::Range&lt;u32&gt;, step: u32) -&gt; Result&lt;StepRange&lt;u32&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u32, to: u32) -&gt; Range&lt;u32&gt;
+range(range: std::ops::Range&lt;i16&gt;, step: i16) -&gt; Result&lt;StepRange&lt;i16&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i16, to: i16) -&gt; Range&lt;i16&gt;
+range(range: std::ops::Range&lt;i8&gt;, step: i8) -&gt; Result&lt;StepRange&lt;i8&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i8, to: i8) -&gt; Range&lt;i8&gt;
+range(range: std::ops::Range&lt;u16&gt;, step: u16) -&gt; Result&lt;StepRange&lt;u16&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(range: std::ops::Range&lt;u64&gt;, step: u64) -&gt; Result&lt;StepRange&lt;u64&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i32, to: i32) -&gt; Range&lt;i32&gt;
+range(from: u128, to: u128) -&gt; Range&lt;u128&gt;
+range(range: std::ops::Range&lt;u8&gt;, step: u8) -&gt; Result&lt;StepRange&lt;u8&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u16, to: u16) -&gt; Range&lt;u16&gt;
+range(from: i128, to: i128) -&gt; Range&lt;i128&gt;
+range(range: std::ops::Range&lt;i32&gt;, step: i32) -&gt; Result&lt;StepRange&lt;i32&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(range: std::ops::Range&lt;FLOAT&gt;, step: f64) -&gt; Result&lt;StepRange&lt;FLOAT&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(range: std::ops::Range&lt;i128&gt;, step: i128) -&gt; Result&lt;StepRange&lt;i128&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i64, to: i64) -&gt; Range&lt;i64&gt;
+range(from: u8, to: u8, step: u8) -&gt; Result&lt;StepRange&lt;u8&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i64, to: i64, step: i64) -&gt; Result&lt;StepRange&lt;i64&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u64, to: u64, step: u64) -&gt; Result&lt;StepRange&lt;u64&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: f64, to: f64, step: f64) -&gt; Result&lt;StepRange&lt;FLOAT&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u32, to: u32, step: u32) -&gt; Result&lt;StepRange&lt;u32&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i8, to: i8, step: i8) -&gt; Result&lt;StepRange&lt;i8&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i32, to: i32, step: i32) -&gt; Result&lt;StepRange&lt;i32&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u128, to: u128, step: u128) -&gt; Result&lt;StepRange&lt;u128&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i16, to: i16, step: i16) -&gt; Result&lt;StepRange&lt;i16&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: u16, to: u16, step: u16) -&gt; Result&lt;StepRange&lt;u16&gt;, Box&lt;EvalAltResult&gt;&gt;
+range(from: i128, to: i128, step: i128) -&gt; Result&lt;StepRange&lt;i128&gt;, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return an iterator over an exclusive range, each iteration increasing by <code>step</code>.</p>
+<p>If <code>range</code> is reversed and <code>step</code> &lt; 0, iteration goes backwards.</p>
+<p>Otherwise, if <code>range</code> is empty, an empty iterator is returned.</p>
+<h4 id="example-55"><a class="header" href="#example-55">Example</a></h4>
+<pre><code class="language-rhai">// prints all values from 8 to 17 in steps of 3
+for n in range(8..18, 3) {
+print(n);
+}
+
+// prints all values down from 18 to 9 in steps of -3
+for n in range(18..8, -3) {
+print(n);
+}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="reduce"><a class="header" href="#reduce">reduce</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">reduce(array: &amp;mut Array, reducer: &amp;str) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce(array: &amp;mut Array, reducer: FnPtr) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce(array: &amp;mut Array, reducer: FnPtr, initial: Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce(array: &amp;mut Array, reducer: &amp;str, initial: Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Reduce an array by iterating through all elements while applying a function named by <code>reducer</code>.</p>
+<h4 id="deprecated-api"><a class="header" href="#deprecated-api">Deprecated API</a></h4>
+<p>This method is deprecated and will be removed from the next major version.
+Use <code>array.reduce(Fn(&quot;fn_name&quot;))</code> instead.</p>
+<h4 id="function-parameters-6"><a class="header" href="#function-parameters-6">Function Parameters</a></h4>
+<p>A function with the same name as the value of <code>reducer</code> must exist taking these parameters:</p>
+<ul>
+<li><code>result</code>: accumulated result, initially <code>()</code></li>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-56"><a class="header" href="#example-56">Example</a></h4>
+<pre><code class="language-rhai">fn process(r, x) {
+x + (r ?? 0)
+}
+fn process_extra(r, x, i) {
+x + i + (r ?? 0)
+}
+
+let x = [1, 2, 3, 4, 5];
+
+let y = x.reduce(&quot;process&quot;);
+
+print(y);       // prints 15
+
+let y = x.reduce(&quot;process_extra&quot;);
+
+print(y);       // prints 25
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="reduce_rev"><a class="header" href="#reduce_rev">reduce_rev</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">reduce_rev(array: &amp;mut Array, reducer: &amp;str) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce_rev(array: &amp;mut Array, reducer: FnPtr) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce_rev(array: &amp;mut Array, reducer: &amp;str, initial: Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;
+reduce_rev(array: &amp;mut Array, reducer: FnPtr, initial: Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Reduce an array by iterating through all elements, in <em>reverse</em> order,
+while applying a function named by <code>reducer</code>.</p>
+<h4 id="deprecated-api-1"><a class="header" href="#deprecated-api-1">Deprecated API</a></h4>
+<p>This method is deprecated and will be removed from the next major version.
+Use <code>array.reduce_rev(Fn(&quot;fn_name&quot;))</code> instead.</p>
+<h4 id="function-parameters-7"><a class="header" href="#function-parameters-7">Function Parameters</a></h4>
+<p>A function with the same name as the value of <code>reducer</code> must exist taking these parameters:</p>
+<ul>
+<li><code>result</code>: accumulated result, initially <code>()</code></li>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-57"><a class="header" href="#example-57">Example</a></h4>
+<pre><code class="language-rhai">fn process(r, x) {
+x + (r ?? 0)
+}
+fn process_extra(r, x, i) {
+x + i + (r ?? 0)
+}
+
+let x = [1, 2, 3, 4, 5];
+
+let y = x.reduce_rev(&quot;process&quot;);
+
+print(y);       // prints 15
+
+let y = x.reduce_rev(&quot;process_extra&quot;);
+
+print(y);       // prints 25
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="remove"><a class="header" href="#remove">remove</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">remove(string: &amp;mut ImmutableString, sub_string: &amp;str)
+remove(string: &amp;mut ImmutableString, character: char)
+remove(map: &amp;mut Map, property: &amp;str) -&gt; Dynamic
+remove(blob: &amp;mut Blob, index: i64) -&gt; i64
+remove(array: &amp;mut Array, index: i64) -&gt; Dynamic</code></pre>
+<p>Remove all occurrences of a sub-string from the string.</p>
+<h4 id="example-58"><a class="header" href="#example-58">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world! hello, foobar!&quot;;
+
+text.remove(&quot;hello&quot;);
+
+print(text);        // prints &quot;, world! , foobar!&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="replace"><a class="header" href="#replace">replace</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">replace(string: &amp;mut ImmutableString, find_character: char, substitute_string: &amp;str)
+replace(string: &amp;mut ImmutableString, find_character: char, substitute_character: char)
+replace(string: &amp;mut ImmutableString, find_string: &amp;str, substitute_character: char)
+replace(string: &amp;mut ImmutableString, find_string: &amp;str, substitute_string: &amp;str)</code></pre>
+<p>Replace all occurrences of the specified character in the string with another string.</p>
+<h4 id="example-59"><a class="header" href="#example-59">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world! hello, foobar!&quot;;
+
+text.replace('l', &quot;(^)&quot;);
+
+print(text);        // prints &quot;he(^)(^)o, wor(^)d! he(^)(^)o, foobar!&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="retain"><a class="header" href="#retain">retain</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">retain(array: &amp;mut Array, filter: &amp;str) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+retain(array: &amp;mut Array, range: Range&lt;i64&gt;) -&gt; Array
+retain(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;) -&gt; Blob
+retain(map: &amp;mut Map, filter: FnPtr) -&gt; Result&lt;Map, Box&lt;EvalAltResult&gt;&gt;
+retain(array: &amp;mut Array, range: RangeInclusive&lt;i64&gt;) -&gt; Array
+retain(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;
+retain(blob: &amp;mut Blob, range: Range&lt;i64&gt;) -&gt; Blob
+retain(array: &amp;mut Array, start: i64, len: i64) -&gt; Array
+retain(blob: &amp;mut Blob, start: i64, len: i64) -&gt; Blob</code></pre>
+<p>Remove all elements in the array that do not return <code>true</code> when applied a function named by
+<code>filter</code> and return them as a new array.</p>
+<h4 id="deprecated-api-2"><a class="header" href="#deprecated-api-2">Deprecated API</a></h4>
+<p>This method is deprecated and will be removed from the next major version.
+Use <code>array.retain(Fn(&quot;fn_name&quot;))</code> instead.</p>
+<h4 id="function-parameters-8"><a class="header" href="#function-parameters-8">Function Parameters</a></h4>
+<p>A function with the same name as the value of <code>filter</code> must exist taking these parameters:</p>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-60"><a class="header" href="#example-60">Example</a></h4>
+<pre><code class="language-rhai">fn large(x) { x &gt;= 3 }
+
+fn screen(x, i) { x + i &lt;= 5 }
+
+let x = [1, 2, 3, 4, 5];
+
+let y = x.retain(&quot;large&quot;);
+
+print(x);       // prints &quot;[3, 4, 5]&quot;
+
+print(y);       // prints &quot;[1, 2]&quot;
+
+let z = x.retain(&quot;screen&quot;);
+
+print(x);       // prints &quot;[3, 4]&quot;
+
+print(z);       // prints &quot;[5]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="reverse"><a class="header" href="#reverse">reverse</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">reverse(blob: &amp;mut Blob)
+reverse(array: &amp;mut Array)</code></pre>
+<p>Reverse the BLOB.</p>
+<h4 id="example-61"><a class="header" href="#example-61">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+print(b);           // prints &quot;[0102030405]&quot;
+
+b.reverse();
+
+print(b);           // prints &quot;[0504030201]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="round"><a class="header" href="#round">round</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">round(x: f64) -&gt; f64</code></pre>
+<p>Return the nearest whole number closest to the floating-point number.
+Rounds away from zero.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="set"><a class="header" href="#set">set</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">set(map: &amp;mut Map, property: &amp;str, value: Dynamic)
+set(string: &amp;mut ImmutableString, index: i64, character: char)
+set(array: &amp;mut Array, index: i64, value: Dynamic)
+set(blob: &amp;mut Blob, index: i64, value: i64)</code></pre>
+<p>Set the value of the <code>property</code> in the object map to a new <code>value</code>.</p>
+<p>If <code>property</code> does not exist in the object map, it is added.</p>
+<h4 id="example-62"><a class="header" href="#example-62">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a: 1, b: 2, c: 3};
+
+m.set(&quot;b&quot;, 42)'
+
+print(m);           // prints &quot;#{a: 1, b: 42, c: 3}&quot;
+
+x.set(&quot;x&quot;, 0);
+
+print(m);           // prints &quot;#{a: 1, b: 42, c: 3, x: 0}&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="set_bit"><a class="header" href="#set_bit">set_bit</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">set_bit(value: &amp;mut i64, bit: i64, new_value: bool) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Set the specified <code>bit</code> in the number if the new value is <code>true</code>.
+Clear the <code>bit</code> if the new value is <code>false</code>.</p>
+<p>If <code>bit</code> &lt; 0, position counts from the MSB (Most Significant Bit).</p>
+<h4 id="example-63"><a class="header" href="#example-63">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+x.set_bit(5, true);
+
+print(x);               // prints 123488
+
+x.set_bit(6, false);
+
+print(x);               // prints 123424
+
+x.set_bit(-48, false);
+
+print(x);               // prints 57888 on 64-bit
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="set_bits"><a class="header" href="#set_bits">set_bits</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">set_bits(value: &amp;mut i64, range: RangeInclusive&lt;i64&gt;, new_value: i64) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+set_bits(value: &amp;mut i64, range: Range&lt;i64&gt;, new_value: i64) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+set_bits(value: &amp;mut i64, bit: i64, bits: i64, new_value: i64) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Replace an inclusive range of bits in the number with a new value.</p>
+<h4 id="example-64"><a class="header" href="#example-64">Example</a></h4>
+<pre><code class="language-rhai">let x = 123456;
+
+x.set_bits(5..=9, 42);
+
+print(x);           // print 123200
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="set_tag"><a class="header" href="#set_tag">set_tag</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">set_tag(value: &amp;mut Dynamic, tag: i64) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Set the <em>tag</em> of a <code>Dynamic</code> value.</p>
+<h4 id="example-65"><a class="header" href="#example-65">Example</a></h4>
+<pre><code class="language-rhai">let x = &quot;hello, world!&quot;;
+
+x.tag = 42;
+
+print(x.tag);           // prints 42
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="shift"><a class="header" href="#shift">shift</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">shift(blob: &amp;mut Blob) -&gt; i64
+shift(array: &amp;mut Array) -&gt; Dynamic</code></pre>
+<p>Remove the first byte from the BLOB and return it.</p>
+<p>If the BLOB is empty, zero is returned.</p>
+<h4 id="example-66"><a class="header" href="#example-66">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+print(b.shift());       // prints 1
+
+print(b);               // prints &quot;[02030405]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sign"><a class="header" href="#sign">sign</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sign(x: i16) -&gt; i64
+sign(x: i128) -&gt; i64
+sign(x: i32) -&gt; i64
+sign(x: i64) -&gt; i64
+sign(x: f64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+sign(x: i8) -&gt; i64
+sign(x: f32) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return the sign (as an integer) of the number according to the following:</p>
+<ul>
+<li><code>0</code> if the number is zero</li>
+<li><code>1</code> if the number is positive</li>
+<li><code>-1</code> if the number is negative</li>
+</ul>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sin"><a class="header" href="#sin">sin</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sin(x: f64) -&gt; f64</code></pre>
+<p>Return the sine of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sinh"><a class="header" href="#sinh">sinh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sinh(x: f64) -&gt; f64</code></pre>
+<p>Return the hyperbolic sine of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sleep"><a class="header" href="#sleep">sleep</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sleep(seconds: f64)
+sleep(seconds: i64)</code></pre>
+<p>Block the current thread for a particular number of <code>seconds</code>.</p>
+<h4 id="example-67"><a class="header" href="#example-67">Example</a></h4>
+<pre><code class="language-rhai">// Do nothing for 10 seconds!
+sleep(10.0);
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="some"><a class="header" href="#some">some</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">some(array: &amp;mut Array, filter: &amp;str) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;
+some(array: &amp;mut Array, filter: FnPtr) -&gt; Result&lt;bool, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Return <code>true</code> if any element in the array that returns <code>true</code> when applied a function named
+by <code>filter</code>.</p>
+<h4 id="deprecated-api-3"><a class="header" href="#deprecated-api-3">Deprecated API</a></h4>
+<p>This method is deprecated and will be removed from the next major version.
+Use <code>array.some(Fn(&quot;fn_name&quot;))</code> instead.</p>
+<h4 id="function-parameters-9"><a class="header" href="#function-parameters-9">Function Parameters</a></h4>
+<p>A function with the same name as the value of <code>filter</code> must exist taking these parameters:</p>
+<ul>
+<li><code>element</code>: copy of array element</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-68"><a class="header" href="#example-68">Example</a></h4>
+<pre><code class="language-rhai">fn large(x) { x &gt; 3 }
+
+fn huge(x) { x &gt; 10 }
+
+fn screen(x, i) { i &gt; x }
+
+let x = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 5];
+
+print(x.some(&quot;large&quot;));     // prints true
+
+print(x.some(&quot;huge&quot;));      // prints false
+
+print(x.some(&quot;screen&quot;));    // prints true
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sort"><a class="header" href="#sort">sort</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sort(array: &amp;mut Array) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;
+sort(array: &amp;mut Array, comparer: FnPtr)
+sort(array: &amp;mut Array, comparer: &amp;str) -&gt; Result&lt;(), Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Sort the array.</p>
+<p>All elements in the array must be of the same data type.</p>
+<h4 id="supported-data-types"><a class="header" href="#supported-data-types">Supported Data Types</a></h4>
+<ul>
+<li>integer numbers</li>
+<li>floating-point numbers</li>
+<li>decimal numbers</li>
+<li>characters</li>
+<li>strings</li>
+<li>booleans</li>
+<li><code>()</code></li>
+</ul>
+<h4 id="example-69"><a class="header" href="#example-69">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 3, 5, 7, 9, 2, 4, 6, 8, 10];
+
+x.sort();
+
+print(x);       // prints &quot;[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="splice"><a class="header" href="#splice">splice</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">splice(blob: &amp;mut Blob, range: Range&lt;i64&gt;, replace: Blob)
+splice(array: &amp;mut Array, range: Range&lt;i64&gt;, replace: Array)
+splice(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, replace: Blob)
+splice(array: &amp;mut Array, range: RangeInclusive&lt;i64&gt;, replace: Array)
+splice(blob: &amp;mut Blob, start: i64, len: i64, replace: Blob)
+splice(array: &amp;mut Array, start: i64, len: i64, replace: Array)</code></pre>
+<p>Replace an exclusive <code>range</code> of the BLOB with another BLOB.</p>
+<h4 id="example-70"><a class="header" href="#example-70">Example</a></h4>
+<pre><code class="language-rhai">let b1 = blob(10, 0x42);
+let b2 = blob(5, 0x18);
+
+b1.splice(1..4, b2);
+
+print(b1);      // prints &quot;[4218181818184242 42424242]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="split"><a class="header" href="#split">split</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">split(string: &amp;str) -&gt; Array
+split(array: &amp;mut Array, index: i64) -&gt; Array
+split(string: &amp;mut ImmutableString, index: i64) -&gt; Array
+split(string: &amp;str, delimiter: char) -&gt; Array
+split(blob: &amp;mut Blob, index: i64) -&gt; Blob
+split(string: &amp;str, delimiter: &amp;str) -&gt; Array
+split(string: &amp;str, delimiter: char, segments: i64) -&gt; Array
+split(string: &amp;str, delimiter: &amp;str, segments: i64) -&gt; Array</code></pre>
+<p>Split the string into segments based on whitespaces, returning an array of the segments.</p>
+<h4 id="example-71"><a class="header" href="#example-71">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world! hello, foo!&quot;;
+
+print(text.split());        // prints [&quot;hello,&quot;, &quot;world!&quot;, &quot;hello,&quot;, &quot;foo!&quot;]
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="split_rev"><a class="header" href="#split_rev">split_rev</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">split_rev(string: &amp;str, delimiter: &amp;str) -&gt; Array
+split_rev(string: &amp;str, delimiter: char) -&gt; Array
+split_rev(string: &amp;str, delimiter: char, segments: i64) -&gt; Array
+split_rev(string: &amp;str, delimiter: &amp;str, segments: i64) -&gt; Array</code></pre>
+<p>Split the string into segments based on a <code>delimiter</code> string, returning an array of the
+segments in <em>reverse</em> order.</p>
+<h4 id="example-72"><a class="header" href="#example-72">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world! hello, foo!&quot;;
+
+print(text.split_rev(&quot;ll&quot;));    // prints [&quot;o, foo!&quot;, &quot;o, world! he&quot;, &quot;he&quot;]
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sqrt"><a class="header" href="#sqrt">sqrt</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sqrt(x: f64) -&gt; f64</code></pre>
+<p>Return the square root of the floating-point number.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="start"><a class="header" href="#start">start</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">start(range: &amp;mut RangeInclusive&lt;i64&gt;) -&gt; i64
+start(range: &amp;mut Range&lt;i64&gt;) -&gt; i64</code></pre>
+<p>Return the start of the inclusive range.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="starts_with"><a class="header" href="#starts_with">starts_with</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">starts_with(string: &amp;str, match_string: &amp;str) -&gt; bool</code></pre>
+<p>Return <code>true</code> if the string starts with a specified string.</p>
+<h4 id="example-73"><a class="header" href="#example-73">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world!&quot;;
+
+print(text.starts_with(&quot;hello&quot;));   // prints true
+
+print(text.starts_with(&quot;world&quot;));   // prints false
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="sub_string"><a class="header" href="#sub_string">sub_string</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">sub_string(string: &amp;str, start: i64) -&gt; ImmutableString
+sub_string(string: &amp;str, range: RangeInclusive&lt;i64&gt;) -&gt; ImmutableString
+sub_string(string: &amp;str, range: Range&lt;i64&gt;) -&gt; ImmutableString
+sub_string(string: &amp;str, start: i64, len: i64) -&gt; ImmutableString</code></pre>
+<p>Copy a portion of the string beginning at the <code>start</code> position till the end and return it as
+a new string.</p>
+<ul>
+<li>If <code>start</code> &lt; 0, position counts from the end of the string (<code>-1</code> is the last character).</li>
+<li>If <code>start</code> &lt; -length of string, the entire string is copied and returned.</li>
+<li>If <code>start</code> ≥ length of string, an empty string is returned.</li>
+</ul>
+<h4 id="example-74"><a class="header" href="#example-74">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world!&quot;;
+
+print(text.sub_string(5));      // prints &quot;, world!&quot;
+
+print(text.sub_string(-5));      // prints &quot;orld!&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="tag"><a class="header" href="#tag">tag</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">tag(value: &amp;mut Dynamic) -&gt; i64</code></pre>
+<p>Return the <em>tag</em> of a <code>Dynamic</code> value.</p>
+<h4 id="example-75"><a class="header" href="#example-75">Example</a></h4>
+<pre><code class="language-rhai">let x = &quot;hello, world!&quot;;
+
+x.tag = 42;
+
+print(x.tag);           // prints 42
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="take"><a class="header" href="#take">take</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">take(value: &amp;mut Dynamic) -&gt; Result&lt;Dynamic, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Take ownership of the data in a <code>Dynamic</code> value and return it.
+The data is <em>NOT</em> cloned.</p>
+<p>The original value is replaced with <code>()</code>.</p>
+<h4 id="example-76"><a class="header" href="#example-76">Example</a></h4>
+<pre><code class="language-rhai">let x = 42;
+
+print(take(x));         // prints 42
+
+print(x);               // prints ()
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="tan"><a class="header" href="#tan">tan</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">tan(x: f64) -&gt; f64</code></pre>
+<p>Return the tangent of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="tanh"><a class="header" href="#tanh">tanh</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">tanh(x: f64) -&gt; f64</code></pre>
+<p>Return the hyperbolic tangent of the floating-point number in radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="timestamp"><a class="header" href="#timestamp">timestamp</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">timestamp() -&gt; Instant</code></pre>
+<p>Create a timestamp containing the current system time.</p>
+<h4 id="example-77"><a class="header" href="#example-77">Example</a></h4>
+<pre><code class="language-rhai">let now = timestamp();
+
+sleep(10.0);            // sleep for 10 seconds
+
+print(now.elapsed);     // prints 10.???
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_array"><a class="header" href="#to_array">to_array</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_array(blob: &amp;mut Blob) -&gt; Array</code></pre>
+<p>Convert the BLOB into an array of integers.</p>
+<h4 id="example-78"><a class="header" href="#example-78">Example</a></h4>
+<pre><code class="language-rhai">let b = blob(5, 0x42);
+
+let x = b.to_array();
+
+print(x);       // prints &quot;[66, 66, 66, 66, 66]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_binary"><a class="header" href="#to_binary">to_binary</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_binary(value: i8) -&gt; ImmutableString
+to_binary(value: u8) -&gt; ImmutableString
+to_binary(value: u128) -&gt; ImmutableString
+to_binary(value: u32) -&gt; ImmutableString
+to_binary(value: i64) -&gt; ImmutableString
+to_binary(value: u64) -&gt; ImmutableString
+to_binary(value: i32) -&gt; ImmutableString
+to_binary(value: i16) -&gt; ImmutableString
+to_binary(value: u16) -&gt; ImmutableString
+to_binary(value: i128) -&gt; ImmutableString</code></pre>
+<p>Convert the <code>value</code> into a string in binary format.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_blob"><a class="header" href="#to_blob">to_blob</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_blob(string: &amp;str) -&gt; Blob</code></pre>
+<p>Convert the string into an UTF-8 encoded byte-stream as a BLOB.</p>
+<h4 id="example-79"><a class="header" href="#example-79">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;朝には紅顔ありて夕べには白骨となる&quot;;
+
+let bytes = text.to_blob();
+
+print(bytes.len());     // prints 51
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_chars"><a class="header" href="#to_chars">to_chars</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_chars(string: &amp;str) -&gt; Array</code></pre>
+<p>Return an array containing all the characters of the string.</p>
+<h4 id="example-80"><a class="header" href="#example-80">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello&quot;;
+
+print(text.to_chars());     // prints &quot;['h', 'e', 'l', 'l', 'o']&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_debug"><a class="header" href="#to_debug">to_debug</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_debug(number: f32) -&gt; ImmutableString
+to_debug(array: &amp;mut Array) -&gt; ImmutableString
+to_debug(string: &amp;str) -&gt; ImmutableString
+to_debug(map: &amp;mut Map) -&gt; ImmutableString
+to_debug(unit: ()) -&gt; ImmutableString
+to_debug(number: f64) -&gt; ImmutableString
+to_debug(character: char) -&gt; ImmutableString
+to_debug(item: &amp;mut Dynamic) -&gt; ImmutableString
+to_debug(f: &amp;mut FnPtr) -&gt; ImmutableString
+to_debug(value: bool) -&gt; ImmutableString</code></pre>
+<p>Convert the value of <code>number</code> into a string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_degrees"><a class="header" href="#to_degrees">to_degrees</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_degrees(x: f64) -&gt; f64</code></pre>
+<p>Convert radians to degrees.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_float"><a class="header" href="#to_float">to_float</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_float(_)
+to_float(_)
+to_float(_)
+to_float(_)
+to_float(_)
+to_float(_)
+to_float(x: f32) -&gt; f64
+to_float(_)
+to_float(_)
+to_float(_)
+to_float(_)
+to_float(_)</code></pre>
+<p>Convert the 32-bit floating-point number to 64-bit.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_hex"><a class="header" href="#to_hex">to_hex</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_hex(value: i32) -&gt; ImmutableString
+to_hex(value: i128) -&gt; ImmutableString
+to_hex(value: u16) -&gt; ImmutableString
+to_hex(value: i16) -&gt; ImmutableString
+to_hex(value: u32) -&gt; ImmutableString
+to_hex(value: u8) -&gt; ImmutableString
+to_hex(value: u128) -&gt; ImmutableString
+to_hex(value: i8) -&gt; ImmutableString
+to_hex(value: u64) -&gt; ImmutableString
+to_hex(value: i64) -&gt; ImmutableString</code></pre>
+<p>Convert the <code>value</code> into a string in hex format.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_int"><a class="header" href="#to_int">to_int</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_int(_)
+to_int(x: f64) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+to_int(_)
+to_int(_)
+to_int(_)
+to_int(_)
+to_int(x: f32) -&gt; Result&lt;i64, Box&lt;EvalAltResult&gt;&gt;
+to_int(_)
+to_int(_)
+to_int(_)
+to_int(_)
+to_int(_)
+to_int(_)</code></pre>
+<p>Convert the floating-point number into an integer.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_json"><a class="header" href="#to_json">to_json</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_json(map: &amp;mut Map) -&gt; String</code></pre>
+<p>Return the JSON representation of the object map.</p>
+<h4 id="data-types"><a class="header" href="#data-types">Data types</a></h4>
+<p>Only the following data types should be kept inside the object map:
+<code>INT</code>, <code>FLOAT</code>, <code>ImmutableString</code>, <code>char</code>, <code>bool</code>, <code>()</code>, <code>Array</code>, <code>Map</code>.</p>
+<h4 id="errors"><a class="header" href="#errors">Errors</a></h4>
+<p>Data types not supported by JSON serialize into formats that may
+invalidate the result.</p>
+<h4 id="example-81"><a class="header" href="#example-81">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a:1, b:2, c:3};
+
+print(m.to_json());     // prints {&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_lower"><a class="header" href="#to_lower">to_lower</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_lower(character: char) -&gt; char
+to_lower(string: ImmutableString) -&gt; ImmutableString</code></pre>
+<p>Convert the character to lower-case and return it as a new character.</p>
+<h4 id="example-82"><a class="header" href="#example-82">Example</a></h4>
+<pre><code class="language-rhai">let ch = 'A';
+
+print(ch.to_lower());       // prints 'a'
+
+print(ch);                  // prints 'A'
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_octal"><a class="header" href="#to_octal">to_octal</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_octal(value: i8) -&gt; ImmutableString
+to_octal(value: u128) -&gt; ImmutableString
+to_octal(value: u8) -&gt; ImmutableString
+to_octal(value: u32) -&gt; ImmutableString
+to_octal(value: i64) -&gt; ImmutableString
+to_octal(value: u64) -&gt; ImmutableString
+to_octal(value: i32) -&gt; ImmutableString
+to_octal(value: i16) -&gt; ImmutableString
+to_octal(value: u16) -&gt; ImmutableString
+to_octal(value: i128) -&gt; ImmutableString</code></pre>
+<p>Convert the <code>value</code> into a string in octal format.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_radians"><a class="header" href="#to_radians">to_radians</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_radians(x: f64) -&gt; f64</code></pre>
+<p>Convert degrees to radians.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_string"><a class="header" href="#to_string">to_string</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_string(unit: ()) -&gt; ImmutableString
+to_string(number: f64) -&gt; ImmutableString
+to_string(number: f32) -&gt; ImmutableString
+to_string(string: ImmutableString) -&gt; ImmutableString
+to_string(array: &amp;mut Array) -&gt; ImmutableString
+to_string(map: &amp;mut Map) -&gt; ImmutableString
+to_string(value: bool) -&gt; ImmutableString
+to_string(character: char) -&gt; ImmutableString
+to_string(item: &amp;mut Dynamic) -&gt; ImmutableString</code></pre>
+<p>Return the empty string.</p>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="to_upper"><a class="header" href="#to_upper">to_upper</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">to_upper(string: ImmutableString) -&gt; ImmutableString
+to_upper(character: char) -&gt; char</code></pre>
+<p>Convert the string to all upper-case and return it as a new string.</p>
+<h4 id="example-83"><a class="header" href="#example-83">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;hello, world!&quot;
+
+print(text.to_upper());     // prints &quot;HELLO, WORLD!&quot;
+
+print(text);                // prints &quot;hello, world!&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="trim"><a class="header" href="#trim">trim</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">trim(string: &amp;mut ImmutableString)</code></pre>
+<p>Remove whitespace characters from both ends of the string.</p>
+<h4 id="example-84"><a class="header" href="#example-84">Example</a></h4>
+<pre><code class="language-rhai">let text = &quot;   hello     &quot;;
+
+text.trim();
+
+print(text);    // prints &quot;hello&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="truncate"><a class="header" href="#truncate">truncate</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">truncate(blob: &amp;mut Blob, len: i64)
+truncate(string: &amp;mut ImmutableString, len: i64)
+truncate(array: &amp;mut Array, len: i64)</code></pre>
+<p>Cut off the BLOB at the specified length.</p>
+<ul>
+<li>If <code>len</code> ≤ 0, the BLOB is cleared.</li>
+<li>If <code>len</code> ≥ length of BLOB, the BLOB is not truncated.</li>
+</ul>
+<h4 id="example-85"><a class="header" href="#example-85">Example</a></h4>
+<pre><code class="language-rhai">let b = blob();
+
+b += 1; b += 2; b += 3; b += 4; b += 5;
+
+b.truncate(3);
+
+print(b);           // prints &quot;[010203]&quot;
+
+b.truncate(10);
+
+print(b);           // prints &quot;[010203]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="values"><a class="header" href="#values">values</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">values(map: &amp;mut Map) -&gt; Array</code></pre>
+<p>Return an array with all the property values in the object map.</p>
+<h4 id="example-86"><a class="header" href="#example-86">Example</a></h4>
+<pre><code class="language-rhai">let m = #{a:1, b:2, c:3};
+
+print(m.values());      // prints &quot;[1, 2, 3]&quot;&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="write_ascii"><a class="header" href="#write_ascii">write_ascii</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">write_ascii(blob: &amp;mut Blob, range: Range&lt;i64&gt;, string: &amp;str)
+write_ascii(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, string: &amp;str)
+write_ascii(blob: &amp;mut Blob, start: i64, len: i64, string: &amp;str)</code></pre>
+<p>Write an ASCII string to the bytes within an exclusive <code>range</code> in the BLOB.</p>
+<p>Each ASCII character encodes to one single byte in the BLOB.
+Non-ASCII characters are ignored.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; length of <code>string</code>, extra bytes in <code>string</code> are not written.</li>
+<li>If number of bytes in <code>range</code> &gt; length of <code>string</code>, extra bytes in <code>range</code> are not modified.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob(8);
+
+b.write_ascii(1..5, &quot;hello, world!&quot;);
+
+print(b);       // prints &quot;[0068656c6c000000]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="write_be"><a class="header" href="#write_be">write_be</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">write_be(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, value: i64)
+write_be(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, value: f64)
+write_be(blob: &amp;mut Blob, range: Range&lt;i64&gt;, value: f64)
+write_be(blob: &amp;mut Blob, range: Range&lt;i64&gt;, value: i64)
+write_be(blob: &amp;mut Blob, start: i64, len: i64, value: i64)
+write_be(blob: &amp;mut Blob, start: i64, len: i64, value: f64)</code></pre>
+<p>Write an <code>INT</code> value to the bytes within an inclusive <code>range</code> in the BLOB
+in big-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>INT</code>, extra bytes in <code>INT</code> are not written.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>INT</code>, extra bytes in <code>range</code> are not modified.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob(8, 0x42);
+
+b.write_be_int(1..=3, 0x99);
+
+print(b);       // prints &quot;[4200000042424242]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="write_le"><a class="header" href="#write_le">write_le</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">write_le(blob: &amp;mut Blob, range: Range&lt;i64&gt;, value: i64)
+write_le(blob: &amp;mut Blob, range: Range&lt;i64&gt;, value: f64)
+write_le(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, value: i64)
+write_le(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, value: f64)
+write_le(blob: &amp;mut Blob, start: i64, len: i64, value: i64)
+write_le(blob: &amp;mut Blob, start: i64, len: i64, value: f64)</code></pre>
+<p>Write an <code>INT</code> value to the bytes within an exclusive <code>range</code> in the BLOB
+in little-endian byte order.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; number of bytes for <code>INT</code>, extra bytes in <code>INT</code> are not written.</li>
+<li>If number of bytes in <code>range</code> &gt; number of bytes for <code>INT</code>, extra bytes in <code>range</code> are not modified.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob(8);
+
+b.write_le_int(1..3, 0x12345678);
+
+print(b);       // prints &quot;[0078560000000000]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="write_utf8"><a class="header" href="#write_utf8">write_utf8</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">write_utf8(blob: &amp;mut Blob, range: Range&lt;i64&gt;, string: &amp;str)
+write_utf8(blob: &amp;mut Blob, range: RangeInclusive&lt;i64&gt;, string: &amp;str)
+write_utf8(blob: &amp;mut Blob, start: i64, len: i64, string: &amp;str)</code></pre>
+<p>Write a string to the bytes within an exclusive <code>range</code> in the BLOB in UTF-8 encoding.</p>
+<ul>
+<li>If number of bytes in <code>range</code> &lt; length of <code>string</code>, extra bytes in <code>string</code> are not written.</li>
+<li>If number of bytes in <code>range</code> &gt; length of <code>string</code>, extra bytes in <code>range</code> are not modified.</li>
+</ul>
+<pre><code class="language-rhai">let b = blob(8);
+
+b.write_utf8(1..5, &quot;朝には紅顔ありて夕べには白骨となる&quot;);
+
+print(b);       // prints &quot;[00e69c9de3000000]&quot;
+</code></pre>
+</div>
+</div>
+<div class='doc-block'>
+<h2 id="zip"><a class="header" href="#zip">zip</a></h2>
+<div class='doc-content'>
+<pre><code class="language-rust ignore">zip(array1: &amp;mut Array, array2: Array, map: FnPtr) -&gt; Result&lt;Array, Box&lt;EvalAltResult&gt;&gt;</code></pre>
+<p>Iterate through all elements in two arrays, applying a <code>mapper</code> function to them,
+and return a new array containing the results.</p>
+<h4 id="function-parameters-10"><a class="header" href="#function-parameters-10">Function Parameters</a></h4>
+<ul>
+<li><code>array1</code>: First array</li>
+<li><code>array2</code>: Second array</li>
+<li><code>index</code> <em>(optional)</em>: current index in the array</li>
+</ul>
+<h4 id="example-87"><a class="header" href="#example-87">Example</a></h4>
+<pre><code class="language-rhai">let x = [1, 2, 3, 4, 5];
+let y = [9, 8, 7, 6];
+
+let z = x.zip(y, |a, b| a + b);
+
+print(z);       // prints [10, 10, 10, 10]
+
+let z = x.zip(y, |a, b, i| a + b + i);
+
+print(z);       // prints [10, 11, 12, 13]
+</code></pre>
+</div>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="./theme/tabs.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
