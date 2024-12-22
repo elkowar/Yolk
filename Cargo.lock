@@ -1989,7 +1989,7 @@ checksum = "cfe53a6657fd280eaa890a3bc59152892ffa3e30101319d168b781ed6529b049"
 
 [[package]]
 name = "yolk_dots"
-version = "0.0.16"
+version = "0.0.17"
 dependencies = [
  "arbitrary",
  "assert_fs",
